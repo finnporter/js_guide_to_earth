@@ -16,6 +16,15 @@ var renderMap = function() {
 var addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
-    console.log(evt) //console logs long and lat
+    console.log(evt.latlng) //console logs long and lat
+    countriesSearch(evt)
   };
+}
+
+var countriesSearch = function(evt) {
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+  console.log(results)
+  });
+
 }
