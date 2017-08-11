@@ -3,44 +3,18 @@
 <html lang="en">
 
 <head>
-  <script src="http://www.webglearth.com/v2/api.js"></script>
-  <script>
-    var earth;
-    var options;
-
-    function initialize() {
-      options = { zoom: 5.0, position: [55.9533, 3.1883] };
-      earth = new WE.map('earth_div', options); 
-      WE.tileLayer("http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg", {
-                minZoom: 0,
-                maxZoom: 5,
-                attribution: "NASA"
-              }).addTo(earth);
-      console.log(earth)
-      earth.on("click", testfunction)
-    }
-
-    function testfunction(evt) {
-      if (evt.latitude !== null && evt.longitude !== null) {
-      var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
-      console.log(evt)
-    };
-    }
-  </script>
   <meta charset="utf-8">
   <title>Hitchhiker's Guide to Earth</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-
+<script type="text/javascript" src="http://www.webglearth.com/v2/api.js"></script>
+<script type="text/javascript" src="mapWrapper.js"></script>
+<script type="text/javascript" src="app.js"></script>
 </head>
 
-<body onload="initialize()">
-  <h1>WebGL Earth API: Hello World</h1>
+<body>
+  <h1>Welcome to Earth!</h1>
   <div id="earth_div" style="width:1200px;height:800px;border:1px solid gray; padding:2px;"></div>
 
-<h3>Welcome to Earth!</h3>
-<div id="world">
-  
-</div>
 </body>
 
 </html>
