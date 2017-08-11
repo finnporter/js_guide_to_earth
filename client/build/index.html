@@ -9,19 +9,22 @@
     var options;
 
     function initialize() {
+      options = { zoom: 5.0, position: [55.9533, 3.1883] };
       earth = new WE.map('earth_div', options); 
-      options = { zoom: 2.0, position: [55.9533, 3.1883] };
       WE.tileLayer("http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg", {
                 minZoom: 0,
                 maxZoom: 5,
                 attribution: "NASA"
               }).addTo(earth);
       console.log(earth)
+      earth.on("click", testfunction)
     }
 
-    function testfunction() {
-      var marker = WE.marker([51.5, -0.1]).addTo(earth)
-      console.log(marker)
+    function testfunction(evt) {
+      if (evt.latitude !== null && evt.longitude !== null) {
+      var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
+      console.log(evt)
+    };
     }
   </script>
   <meta charset="utf-8">
@@ -32,7 +35,7 @@
 
 <body onload="initialize()">
   <h1>WebGL Earth API: Hello World</h1>
-  <div onclick="testfunction()" id="earth_div" style="width:1200px;height:800px;border:1px solid gray; padding:2px;"></div>
+  <div id="earth_div" style="width:1200px;height:800px;border:1px solid gray; padding:2px;"></div>
 
 <h3>Welcome to Earth!</h3>
 <div id="world">
