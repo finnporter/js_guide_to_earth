@@ -40,3 +40,15 @@ var getCountryRegions = function(countries) {
     console.log(countryRegions)
   return countryRegions;
 };
+
+var getCountryBorders = function(countries) {
+  var countryBorders = [];
+  var country = {};
+  countryBorders = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry[country.name] = country.borders;
+    return reformattedCountry;
+  });
+    console.log(countryBorders)
+  return countryBorders;
+};
