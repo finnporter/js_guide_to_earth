@@ -9,9 +9,12 @@ var makeCountriesRequest = function(url, callback) {
 
 var requestCountriesComplete = function() {
   if (this.status !== 200) return;
+
   var jsonString = this.responseText;
   var countries = JSON.parse(jsonString);
-  //call function to populate info window here, pass var countries
+  console.log(countries);
+
+  getCountryNames(countries);
 };
 
 var app = function() {
