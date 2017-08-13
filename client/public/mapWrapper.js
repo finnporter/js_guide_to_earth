@@ -9,7 +9,7 @@ var renderMap = function() {
     maxZoom: 5,
     attribution: "NASA"
   }).addTo(earth);
-  console.log(earth)
+  // console.log(earth)
   earth.on("click", addMarker)
 }
 
@@ -22,10 +22,10 @@ var addMarker = function(evt) {
     // var marker = WE.marker([evt.latitude, evt.longitude], '/images/flying_saucer_by_absurdwordpreferred.png', 50, 12);
 
 
-    console.log(evt.latlng) //console logs long and lat
+    // console.log(evt) //console logs long and lat
     countriesSearch(evt)
     marker.bindPopup(
-      '<br><script>content</script></br>'
+      fillInfoWindow("This is a string")
     );
   }
 }
@@ -35,6 +35,10 @@ var countriesSearch = function(evt) {
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
   console.log(results)
   });
+}
+
+var fillInfoWindow = function(contentString) {
+  return '<b>' + contentString + '</b>'
 }
 
 
