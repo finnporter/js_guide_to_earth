@@ -22,11 +22,20 @@ var addMarker = function(evt) {
 }
 
 var countriesSearch = function(evt) {
+  searchCity(evt);
+
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
   display = results[0].formatted_address;
   split = display.split(",")
   console.log(split[split.length - 1]);
   });
+}
 
+var searchCity = function(evt) {
+  console.log(evt);
+  // var request = new XMLHttpRequest();
+  // request.addEventListener('click', callback)
+  // request.open("GET", "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude37);
+  // request.send();
 }
