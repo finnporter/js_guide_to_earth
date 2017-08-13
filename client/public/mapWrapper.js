@@ -16,13 +16,17 @@ var renderMap = function() {
 var addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
+
+    // custom marker logo:
+
+    // var marker = WE.marker([evt.latitude, evt.longitude], '/images/flying_saucer_by_absurdwordpreferred.png', 50, 12);
+
+    
     console.log(evt.latlng) //console logs long and lat
     countriesSearch(evt)
-    marker.bindPopup({
-      content: '<b>Hello world!</b>',
-      maxWidth: 300,
-      closeBtn: false
-    });
+    marker.bindPopup(
+      '<b>Hello world!</b>'
+    );
   }
 }
 
