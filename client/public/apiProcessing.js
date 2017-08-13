@@ -14,7 +14,29 @@ var getCountryArea = function(countries) {
     var reformattedCountry = {};
     reformattedCountry[country.name] = country.area;
     return reformattedCountry;
-  })
-    console.log(countryAreas)
+  });
   return countryAreas;
+};
+
+var getCountryPopulation = function(countries) {
+  var countryPopulations = [];
+  var country = {};
+  countryPopulations = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry[country.name] = country.population;
+    return reformattedCountry;
+  });
+  return countryPopulations;
+};
+
+var getCountryRegions = function(countries) {
+  var countryRegions = [];
+  var country = {};
+  countryRegions = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry[country.name] = country.region;
+    return reformattedCountry;
+  });
+    console.log(countryRegions)
+  return countryRegions;
 };

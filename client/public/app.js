@@ -16,6 +16,9 @@ var requestCountriesComplete = function() {
 
   getCountryNames(countries);
   getCountryArea(countries);
+  getCountryPopulation(countries);
+  getCountryRegions(countries);
+  getCountryBorders(countries);
 };
 
 var app = function() {
