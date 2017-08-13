@@ -15,6 +15,7 @@ var requestCountriesComplete = function() {
   console.log(countries);
 
   getCountryNames(countries);
+  getCountryArea(countries);
 };
 
 var app = function() {

@@ -1,4 +1,4 @@
-//processes countries array in a way that will make it easier for the info window to display
+//processes [countries] in a way that will make it easier for the info window to display
 var getCountryNames = function(countries) {
   var countryNames = [];
   countries.forEach(function(country) {
@@ -9,10 +9,12 @@ var getCountryNames = function(countries) {
 
 var getCountryArea = function(countries) {
   var countryAreas = [];
-  countries.forEach(function(country) {
-    countryAreas.push(countr.area);
-  });
+  var country = {};
+  countryAreas = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry[country.name] = country.area;
+    return reformattedCountry;
+  })
+    console.log(countryAreas)
   return countryAreas;
 };
-
-//will add and refactor after break
