@@ -19,13 +19,13 @@ var addMarker = function(evt) {
 
     // custom marker logo:
 
-    // var marker = WE.marker([evt.latitude, evt.longitude], '/images/flying_saucer_by_absurdwordpreferred.png', 50, 12);
+    // var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
 
 
-    // console.log(evt) //console logs long and lat
+    console.log(evt) //console logs long and lat
     countriesSearch(evt)
     marker.bindPopup(
-      fillInfoWindow("This is a string")
+      fillInfoWindow(evt.latitude)
     );
   }
 }
