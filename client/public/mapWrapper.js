@@ -21,11 +21,11 @@ var addMarker = function(evt) {
 
     // var marker = WE.marker([evt.latitude, evt.longitude], '/images/flying_saucer_by_absurdwordpreferred.png', 50, 12);
 
-    
+
     console.log(evt.latlng) //console logs long and lat
     countriesSearch(evt)
     marker.bindPopup(
-      '<b>Hello world!</b>'
+      '<br><script>content</script></br>'
     );
   }
 }
