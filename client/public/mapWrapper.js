@@ -18,7 +18,12 @@ var addMarker = function(evt) {
     var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
     console.log(evt.latlng) //console logs long and lat
     countriesSearch(evt)
-  };
+    marker.bindPopup({
+      content: '<b>Hello world!</b>',
+      maxWidth: 300,
+      closeBtn: false
+    });
+  }
 }
 
 var countriesSearch = function(evt) {
@@ -26,5 +31,6 @@ var countriesSearch = function(evt) {
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
   console.log(results)
   });
-
 }
+
+
