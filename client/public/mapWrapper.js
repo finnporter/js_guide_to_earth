@@ -34,6 +34,7 @@ var countriesSearch = function(evt) {
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
   country = results.pop()
   console.log(country.formatted_address)
+  // last array in every click contains the countries name
   });
 }
 
