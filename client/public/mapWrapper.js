@@ -34,7 +34,8 @@ var countriesSearch = function(evt) {
 
 var searchCity = function(evt) {
   console.log(evt);
-  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude37;
+  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
+  // var url = "https://api.teleport.org/api/locations/37.77493,-122.41942";
   makeRequest(url, requestComplete);
 }
 
@@ -43,4 +44,10 @@ var makeRequest = function(url, callback) {
   request.addEventListener('click', callback);
   request.open("GET", url);
   request.send();
+}
+
+var requestComplete = function() {
+  if (this.status !== 200) return;
+
+  console.log("request complete")
 }
