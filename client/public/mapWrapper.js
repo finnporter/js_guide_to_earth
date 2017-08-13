@@ -1,5 +1,6 @@
 var earth;
 var options;
+var countryName;
 
 var renderMap = function() {
   options = { zoom: 2.0, position: [55.9533, 3.1883] };
@@ -24,21 +25,22 @@ var addMarker = function(evt) {
 
     console.log(evt) //console logs long and lat
     countriesSearch(evt)
-    marker.bindPopup(
-      fillInfoWindow(evt.latitude)
-    );
+    marker.bindPopup('<b>' + country.formatted_address + '</b>');
   }
 }
 
 var countriesSearch = function(evt) {
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-  console.log(results)
+  country = results.pop()
+  console.log(country.formatted_address)
   });
 }
 
-var fillInfoWindow = function(contentString) {
-  return '<b>' + contentString + '</b>'
-}
+
+
+// var fillInfoWindow = function(contentString) {
+//   return '<b>' + contentString + '</b>'
+// }
 
 
