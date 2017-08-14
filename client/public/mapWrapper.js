@@ -26,9 +26,11 @@ var countriesSearch = function(evt) {
 
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-  display = results[0].formatted_address;
-  split = display.split(",")
-  console.log(split[split.length - 1]);
+    var single = results[results.length - 1];
+    console.log(single.formatted_address)
+  // display = results[0].formatted_address;
+  // split = display.split(",")
+  // console.log(split[split.length - 1]);
   });
 }
 
