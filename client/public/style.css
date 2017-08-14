@@ -31,22 +31,22 @@ h1 {
 }*/
 
 .button {
-  width:160px;
-  height: 60px;
+  width:80px;
+  height: 10px;
   display: inline-block;
   padding: 15px 45px;
   margin:20px;
-  margin-right:45px;
-  font-size: 24px;
+  margin-right:100px;
+  font-size: 18px;
   text-align: center;
   cursor: pointer;
   text-decoration: none;
-  outline: none;
-  color: #fff;
+  outline: bold;
+  color: #369ECC;
   background-color: #4CAF50;
   border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
+  border-radius: 5px;
+  /*box-shadow: 0 9px #999;*/
 }
 #footer{
   position: relative;
@@ -59,13 +59,13 @@ h1 {
   margin-right: auto;
   margin-left: auto;
   top: 0px; 
-  left: 5px; 
+  left: 0px; 
   transform: rotate(0deg) skew(0deg); 
   -webkit-transform: rotate(0deg) skew(0deg); 
-  border-top: 75px solid #428BCA; 
+  /*border-top: 75px solid #428BCA; 
   border-left: 60px solid transparent; 
-  border-right: 60px solid transparent;
-
+  border-right: 60px solid transparent;*/
+  background-image: url("lowerdash.png")
 }
 
 #oval {
