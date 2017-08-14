@@ -67,14 +67,8 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(1);
-__webpack_require__(2);
-module.exports = __webpack_require__(3);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
+var MapWrapper = __webpack_require__(1);
+var ApiProcessing = __webpack_require__(2);
 
 var makeCountriesRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -92,15 +86,18 @@ var requestCountriesComplete = function() {
   var countries = JSON.parse(jsonString);
   console.log(countries);
 
-  getCountryNames(countries);
-  getCountryArea(countries);
-  getCountryPopulation(countries);
-  getCountryRegions(countries);
-  getCountryBorders(countries);
+  var countriesApi = new ApiProcessing(); 
+  
+  countriesApi.getCountryNames(countries);
+  countriesApi.getCountryArea(countries);
+  countriesApi.getCountryPopulation(countries);
+  countriesApi.getCountryRegions(countries);
+  countriesApi.getCountryBorders(countries);
 };
 
 var app = function() {
- renderMap();
+ var mainMap = new MapWrapper();
+ mainMap.renderMap();
 
  var url = 'https://restcountries.eu/rest/v2/all';
  makeCountriesRequest(url, requestCountriesComplete)
@@ -114,65 +111,64 @@ var app = function() {
 window.addEventListener('load', app);
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports) {
 
-var earth;
-var options;
-var country;
+var MapWrapper = function() {
+  this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
+  this.earth = new WE.map('earth_div', this.options); 
+  this.country = null;
+}
 
-var renderMap = function() {
-  options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
-  earth = new WE.map('earth_div', options); 
+MapWrapper.prototype.renderMap = function() {
   WE.tileLayer("http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg", {
     minZoom: 0,
     maxZoom: 5,
     sky:true,
     attribution: "NASA"
-  }).addTo(earth);
+  }).addTo(this.earth);
   // console.log(earth)
-  earth.on("click", addMarker)
+  this.earth.on("click", this.addMarker.bind(this));
 }
 
 
-var addMarker = function(evt) {
+MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
-    var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
+    var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(this.earth);
 
-    console.log(evt) //console logs long and lat
-    countriesSearch(evt)
 
-    marker.bindPopup(fillInfoWindow(country));
-
+    console.log(this) //console logs long and lat
+    this.countriesSearch(evt, marker)
     setTimeout(function() {
       marker.closePopup()
     }, 30000)
   }
 }
 
-var countriesSearch = function(evt) {
-  searchCity(evt);
+MapWrapper.prototype.countriesSearch = function(evt, marker) {
+  this.searchCity(evt);
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-  country = results.pop()
-  console.log(country)
+    this.country = results.pop()
+    marker.bindPopup(this.fillInfoWindow(this.country));
+    console.log(this.country.formatted_address)
   // last array in every click contains the countries name
-  });
+}.bind(this));
 }
 
-var searchCity = function(evt) {
+MapWrapper.prototype.searchCity = function(evt) {
   var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-  makeRequest(url, requestComplete);
+  this.makeRequest(url, this.requestComplete);
 }
 
-var makeRequest = function(url, callback) {
+MapWrapper.prototype.makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
   request.addEventListener('load', callback);
   request.open("GET", url);
   request.send();
 }
 
-var requestComplete = function() {
+MapWrapper.prototype.requestComplete = function() {
   if (this.status !== 200) return;
 
   var jsonString = this.responseText;
@@ -180,25 +176,45 @@ var requestComplete = function() {
   console.log(nearCity._embedded);
 }
 
-var fillInfoWindow = function(countryInfo) {
+MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
   return '<h3>' + countryInfo.formatted_address + '</h3>'
 }
 
+// var fillInfoWindow = function(countryInfo, countryNames) {
+//   for (country1 of countryNames) {
+//     for (country2 of countryInfo.formatted_address) {
+//       if (country1 === country2) {
+//         return '<h3>' + country1 + 'random info' + '</h3>'
+//       } else {
+//         return "Not a country"
+//       }
+//       }
+//     }
+//   }
+
+// var transfer = function(countriesTest) {
+//   console.log(countriesTest);
+// }
+
+module.exports = MapWrapper;
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
+var ApiProcessing = function() {
+};
 //processes [countries] in a way that will make it easier for the info window to display
-var getCountryNames = function(countries) {
-  var countryNames = [];
+ApiProcessing.prototype.getCountryNames = function(countries) {
+  countryNames = [];
   countries.forEach(function(country) {
     countryNames.push(country.name);
   });
+  // transfer(countryNames);
   return countryNames;
 };
 
-var getCountryArea = function(countries) {
+ApiProcessing.prototype.getCountryArea = function(countries) {
   var countryAreas = [];
   var country = {};
   countryAreas = countries.map(function(country) {
@@ -209,7 +225,7 @@ var getCountryArea = function(countries) {
   return countryAreas;
 };
 
-var getCountryPopulation = function(countries) {
+ApiProcessing.prototype.getCountryPopulation = function(countries) {
   var countryPopulations = [];
   var country = {};
   countryPopulations = countries.map(function(country) {
@@ -220,7 +236,7 @@ var getCountryPopulation = function(countries) {
   return countryPopulations;
 };
 
-var getCountryRegions = function(countries) {
+ApiProcessing.prototype.getCountryRegions = function(countries) {
   var countryRegions = [];
   var country = {};
   countryRegions = countries.map(function(country) {
@@ -231,7 +247,7 @@ var getCountryRegions = function(countries) {
   return countryRegions;
 };
 
-var getCountryBorders = function(countries) {
+ApiProcessing.prototype.getCountryBorders = function(countries) {
   var countryBorders = [];
   var country = {};
   countryBorders = countries.map(function(country) {
@@ -241,6 +257,8 @@ var getCountryBorders = function(countries) {
   });
   return countryBorders;
 };
+
+module.exports = ApiProcessing;
 
 /***/ })
 /******/ ]);
