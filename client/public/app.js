@@ -22,8 +22,8 @@ var requestCountriesComplete = function() {
   var countriesInfo = {
   name: countriesApi.getCountryNames(countries),
   area: countriesApi.getCountryArea(countries),
-  pop: countriesApi.getCountryPopulation(countries),
-  reg: countriesApi.getCountryRegions(countries),
+  population: countriesApi.getCountryPopulation(countries),
+  region: countriesApi.getCountryRegions(countries),
   border: countriesApi.getCountryBorders(countries)
 };
 

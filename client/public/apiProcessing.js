@@ -14,7 +14,8 @@ ApiProcessing.prototype.getCountryArea = function(countries) {
   var country = {};
   countryAreas = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.area;
+    reformattedCountry.name = country.name;
+    reformattedCountry.area = country.area;
     return reformattedCountry;
   });
   return countryAreas;
@@ -25,7 +26,8 @@ ApiProcessing.prototype.getCountryPopulation = function(countries) {
   var country = {};
   countryPopulations = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.population;
+    reformattedCountry.name = country.name;
+    reformattedCountry.population = country.population;
     return reformattedCountry;
   });
   return countryPopulations;
@@ -36,7 +38,8 @@ ApiProcessing.prototype.getCountryRegions = function(countries) {
   var country = {};
   countryRegions = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.region;
+    reformattedCountry.name = country.name;
+    reformattedCountry.region = country.region;
     return reformattedCountry;
   });
   return countryRegions;
@@ -47,7 +50,8 @@ ApiProcessing.prototype.getCountryBorders = function(countries) {
   var country = {};
   countryBorders = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.borders;
+    reformattedCountry.name = country.name;
+    reformattedCountry.borders = country.borders;
     return reformattedCountry;
   });
   return countryBorders;
