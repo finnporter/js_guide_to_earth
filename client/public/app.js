@@ -36,9 +36,4 @@ var app = function() {
  makeCountriesRequest(url, requestCountriesComplete);
 };
 
-
-
-
-
-
 window.addEventListener('load', app);

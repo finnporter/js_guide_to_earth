@@ -3,7 +3,7 @@ var MapWrapper = function(countriesInfo) {
   this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
-}
+};
 
 MapWrapper.prototype.renderMap = function() {
   WE.tileLayer("http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg", {
@@ -13,8 +13,7 @@ MapWrapper.prototype.renderMap = function() {
     attribution: "NASA"
   }).addTo(this.earth);
   this.earth.on("click", this.addMarker.bind(this));
-}
-
+};
 
 MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
@@ -27,18 +26,9 @@ MapWrapper.prototype.addMarker = function(evt) {
       marker.closePopup()
     }, 30000)
   }
-}
+};
 
-// for (country1 of countryNames) {
-//   for (country2 of countryInfo.formatted_address) {
-//     if (country1 === country2) {
-  //   } else {
-  //     return "Not a country"
-  //   }
-  //   }
-  // }
-
-  MapWrapper.prototype.fillInfoWindow = function(info) {
+MapWrapper.prototype.fillInfoWindow = function(info) {
   // console.log(this.countryInfo.name)
   console.log(this.countriesInfo.name)
   for (country of this.countriesInfo.name) {
@@ -53,11 +43,9 @@ MapWrapper.prototype.addMarker = function(evt) {
       }).region + '</h3>'
 
     }
-
   }
   return '<p>Not recommended by administration</p>'
-}
-
+};
 
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
@@ -69,19 +57,19 @@ MapWrapper.prototype.countriesSearch = function(evt, marker) {
     // console.log(this.country.formatted_address)
   // last array in every click contains the countries name
 }.bind(this));
-}
+};
 
 MapWrapper.prototype.searchCity = function(evt) {
   var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
   this.makeRequest(url, this.requestComplete);
-}
+};
 
 MapWrapper.prototype.makeRequest = function(url, callback) {
   var request = new XMLHttpRequest();
   request.addEventListener('load', callback);
   request.open("GET", url);
   request.send();
-}
+};
 
 MapWrapper.prototype.requestComplete = function() {
   if (this.status !== 200) return;
@@ -89,6 +77,6 @@ MapWrapper.prototype.requestComplete = function() {
   var jsonString = this.responseText;
   var nearCity = JSON.parse(jsonString);
   console.log(nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
-}
+};
 
 module.exports = MapWrapper;

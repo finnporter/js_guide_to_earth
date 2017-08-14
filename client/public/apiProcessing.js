@@ -1,6 +1,6 @@
 var ApiProcessing = function() {
 };
-//processes [countries] in a way that will make it easier for the info window to display
+
 ApiProcessing.prototype.getCountryNames = function(countries) {
   countryNames = [];
   countries.forEach(function(country) {
