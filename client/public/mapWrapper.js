@@ -21,9 +21,7 @@ var addMarker = function(evt) {
     var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
 
     console.log(evt) //console logs long and lat
-    countriesSearch(evt)
-
-    marker.bindPopup(fillInfoWindow(country));
+    countriesSearch(evt, marker)
 
     setTimeout(function() {
       marker.closePopup()
@@ -31,14 +29,15 @@ var addMarker = function(evt) {
   }
 }
 
-var countriesSearch = function(evt) {
+var countriesSearch = function(evt, marker) {
   searchCity(evt);
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-  country = results.pop()
-  console.log(country)
+    country = results.pop()
+    marker.bindPopup(fillInfoWindow(country));
+    console.log(country)
   // last array in every click contains the countries name
-  });
+});
 }
 
 var searchCity = function(evt) {
