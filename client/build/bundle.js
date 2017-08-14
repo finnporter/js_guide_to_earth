@@ -91,8 +91,8 @@ var requestCountriesComplete = function() {
   var countriesInfo = {
   name: countriesApi.getCountryNames(countries),
   area: countriesApi.getCountryArea(countries),
-  pop: countriesApi.getCountryPopulation(countries),
-  reg: countriesApi.getCountryRegions(countries),
+  population: countriesApi.getCountryPopulation(countries),
+  region: countriesApi.getCountryRegions(countries),
   border: countriesApi.getCountryBorders(countries)
 };
 
@@ -156,17 +156,23 @@ MapWrapper.prototype.addMarker = function(evt) {
   //   }
   // }
 
-MapWrapper.prototype.fillInfoWindow = function(info) {
+  MapWrapper.prototype.fillInfoWindow = function(info) {
   // console.log(this.countryInfo.name)
+  console.log(this.countriesInfo.name)
   for (country of this.countriesInfo.name) {
-      if (country === info.formatted_address) {
-      return '<h3>' + country + '\n' +
-      'dgfdsfgd' + '\n' +
-      'fdfsdfds' + '</h3>'
-        console.log(country)
-      }
-     
+    if (country === info.formatted_address) {
+      console.log(this.countriesInfo.population)
+      return '<h3>' + country + '</h3>' + '<br>' +
+      this.countriesInfo.population.find(function(countryObject){
+        return country === countryObject.name;
+      }).population + '<br>' +
+      this.countriesInfo.region.find(function(countryObject) {
+        return country === countryObject.name;
+      }).region + '</h3>'
+
     }
+
+  }
   return '<p>Not recommended by administration</p>'
 }
 
@@ -225,7 +231,8 @@ ApiProcessing.prototype.getCountryArea = function(countries) {
   var country = {};
   countryAreas = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.area;
+    reformattedCountry.name = country.name;
+    reformattedCountry.area = country.area;
     return reformattedCountry;
   });
   return countryAreas;
@@ -236,7 +243,8 @@ ApiProcessing.prototype.getCountryPopulation = function(countries) {
   var country = {};
   countryPopulations = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.population;
+    reformattedCountry.name = country.name;
+    reformattedCountry.population = country.population;
     return reformattedCountry;
   });
   return countryPopulations;
@@ -247,7 +255,8 @@ ApiProcessing.prototype.getCountryRegions = function(countries) {
   var country = {};
   countryRegions = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.region;
+    reformattedCountry.name = country.name;
+    reformattedCountry.region = country.region;
     return reformattedCountry;
   });
   return countryRegions;
@@ -258,7 +267,8 @@ ApiProcessing.prototype.getCountryBorders = function(countries) {
   var country = {};
   countryBorders = countries.map(function(country) {
     var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.borders;
+    reformattedCountry.name = country.name;
+    reformattedCountry.borders = country.borders;
     return reformattedCountry;
   });
   return countryBorders;

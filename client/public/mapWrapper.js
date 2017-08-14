@@ -38,17 +38,23 @@ MapWrapper.prototype.addMarker = function(evt) {
   //   }
   // }
 
-MapWrapper.prototype.fillInfoWindow = function(info) {
+  MapWrapper.prototype.fillInfoWindow = function(info) {
   // console.log(this.countryInfo.name)
+  console.log(this.countriesInfo.name)
   for (country of this.countriesInfo.name) {
-      if (country === info.formatted_address) {
-      return '<h3>' + country + '\n' +
-      'dgfdsfgd' + '\n' +
-      'fdfsdfds' + '</h3>'
-        console.log(country)
-      }
-     
+    if (country === info.formatted_address) {
+      console.log(this.countriesInfo.population)
+      return '<h3>' + country + '</h3>' + '<br>' +
+      this.countriesInfo.population.find(function(countryObject){
+        return country === countryObject.name;
+      }).population + '<br>' +
+      this.countriesInfo.region.find(function(countryObject) {
+        return country === countryObject.name;
+      }).region + '</h3>'
+
     }
+
+  }
   return '<p>Not recommended by administration</p>'
 }
 
