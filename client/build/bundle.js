@@ -84,7 +84,7 @@ var requestCountriesComplete = function() {
 
   var jsonString = this.responseText;
   var countries = JSON.parse(jsonString);
-  console.log(countries);
+  // console.log(countries);
 
   var countriesApi = new ApiProcessing(); 
   
@@ -142,11 +142,23 @@ MapWrapper.prototype.addMarker = function(evt) {
 };
 
 MapWrapper.prototype.fillInfoWindow = function(info) {
-  // console.log(this.countryInfo.name)
-  console.log(this.countriesInfo.name)
+  // console.log(this.countriesInfo.name)
+
+  var countryPopulation = function(info) {
+    for (country of this.countriesInfo.name) {
+      if (country === info.formatted_address) {
+        this.countriesInfo.population.find(function(countObject) {
+          return country === countObject.name
+        }).population
+      }
+    }
+  };
+  console.log(countryPopulation);
+
   for (country of this.countriesInfo.name) {
     if (country === info.formatted_address) {
       console.log(this.countriesInfo.population)
+
       return '<h3>' + country + '</h3>' + '<br>' +
       this.countriesInfo.population.find(function(countryObject){
         return country === countryObject.name;
@@ -154,7 +166,6 @@ MapWrapper.prototype.fillInfoWindow = function(info) {
       this.countriesInfo.region.find(function(countryObject) {
         return country === countryObject.name;
       }).region + '</h3>'
-
     }
   }
   return '<p>Not recommended by administration</p>'
