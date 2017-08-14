@@ -20,9 +20,9 @@ MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(this.earth);
 
-    // console.log(this) 
-    this.countriesSearch(evt, marker)
+    console.log(this) //console logs long and lat
 
+    this.countriesSearch(evt, marker)
     setTimeout(function() {
       marker.closePopup()
     }, 30000)
