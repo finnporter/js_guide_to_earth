@@ -19,19 +19,21 @@ var requestCountriesComplete = function() {
 
   var countriesApi = new ApiProcessing(); 
   
-  countriesApi.getCountryNames(countries);
-  countriesApi.getCountryArea(countries);
-  countriesApi.getCountryPopulation(countries);
-  countriesApi.getCountryRegions(countries);
-  countriesApi.getCountryBorders(countries);
+  var countriesInfo = {
+  name: countriesApi.getCountryNames(countries),
+  area: countriesApi.getCountryArea(countries),
+  pop: countriesApi.getCountryPopulation(countries),
+  reg: countriesApi.getCountryRegions(countries),
+  border: countriesApi.getCountryBorders(countries)
+};
+
+  var mainMap = new MapWrapper(countriesInfo);
+  mainMap.renderMap();
 };
 
 var app = function() {
- var mainMap = new MapWrapper();
- mainMap.renderMap();
-
  var url = 'https://restcountries.eu/rest/v2/all';
- makeCountriesRequest(url, requestCountriesComplete)
+ makeCountriesRequest(url, requestCountriesComplete);
 };
 
 

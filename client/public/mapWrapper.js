@@ -1,4 +1,5 @@
-var MapWrapper = function() {
+var MapWrapper = function(countriesInfo) {
+  this.countryInfo = countriesInfo;
   this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
@@ -29,11 +30,17 @@ MapWrapper.prototype.addMarker = function(evt) {
   }
 }
 
+MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
+  console.log(this.countryInfo);
+  return '<h3>' + countryInfo.formatted_address + '</h3>'
+}
+
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
   var geocoder = new google.maps.Geocoder;
   geocoder.geocode({ 'location': evt.latlng}, function(results, status){
     this.country = results.pop()
+
     marker.bindPopup(this.fillInfoWindow(this.country));
     console.log(this.country.formatted_address)
   // last array in every click contains the countries name
@@ -60,9 +67,6 @@ MapWrapper.prototype.requestComplete = function() {
   console.log(nearCity._embedded);
 }
 
-MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
-  return '<h3>' + countryInfo.formatted_address + '</h3>'
-}
 
 // var fillInfoWindow = function(countryInfo, countryNames) {
 //   for (country1 of countryNames) {
@@ -75,9 +79,5 @@ MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
 //       }
 //     }
 //   }
-
-// var transfer = function(countriesTest) {
-//   console.log(countriesTest);
-// }
 
 module.exports = MapWrapper;

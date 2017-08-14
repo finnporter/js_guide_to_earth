@@ -6,7 +6,6 @@ ApiProcessing.prototype.getCountryNames = function(countries) {
   countries.forEach(function(country) {
     countryNames.push(country.name);
   });
-  // transfer(countryNames);
   return countryNames;
 };
 
