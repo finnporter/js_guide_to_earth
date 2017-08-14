@@ -16,16 +16,16 @@ var renderMap = function() {
 
 var addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
-    var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
+    // var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
 
     // custom marker logo:
 
-    // var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
+    var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
 
 
     console.log(evt) //console logs long and lat
     countriesSearch(evt)
-    
+
     marker.bindPopup(fillInfoWindow(country));
 
     setTimeout(function() {
