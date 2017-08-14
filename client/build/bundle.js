@@ -130,7 +130,6 @@ MapWrapper.prototype.renderMap = function() {
     sky:true,
     attribution: "NASA"
   }).addTo(this.earth);
-  // console.log(earth)
   this.earth.on("click", this.addMarker.bind(this));
 }
 
@@ -139,7 +138,7 @@ MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(this.earth);
 
-    console.log(this) //console logs long and lat
+    // console.log(this) 
     this.countriesSearch(evt, marker)
 
     setTimeout(function() {
@@ -149,7 +148,6 @@ MapWrapper.prototype.addMarker = function(evt) {
 }
 
 MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
-  console.log(this.countryInfo);
   return '<h3>' + countryInfo.formatted_address + '</h3>'
 }
 
@@ -182,7 +180,7 @@ MapWrapper.prototype.requestComplete = function() {
 
   var jsonString = this.responseText;
   var nearCity = JSON.parse(jsonString);
-  console.log(nearCity._embedded);
+  console.log(nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
 }
 
 
