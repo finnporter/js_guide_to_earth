@@ -1,5 +1,6 @@
 var earth;
 var options;
+var country;
 
 var renderMap = function() {
   options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
@@ -10,26 +11,33 @@ var renderMap = function() {
     sky:true,
     attribution: "NASA"
   }).addTo(earth);
-  console.log(earth)
+  // console.log(earth)
   earth.on("click", addMarker)
 }
 
 
 var addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
-    var marker = WE.marker([evt.latitude, evt.longitude]).addTo(earth)
-    console.log(evt.latlng); 
-    countriesSearch(evt);
-  };
+    var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(earth);
+
+    console.log(evt) //console logs long and lat
+    countriesSearch(evt)
+
+    marker.bindPopup(fillInfoWindow(country));
+
+    setTimeout(function() {
+      marker.closePopup()
+    }, 30000)
+  }
 }
 
 var countriesSearch = function(evt) {
   searchCity(evt);
-
   var geocoder = new google.maps.Geocoder;
-  geocoder.geocode({ 'location': evt.latlng}, function(results, status) {
-    var single = results[results.length - 1];
-    console.log(single.formatted_address);
+  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+  country = results.pop()
+  console.log(country)
+  // last array in every click contains the countries name
   });
 }
 
@@ -51,4 +59,8 @@ var requestComplete = function() {
   var jsonString = this.responseText;
   var nearCity = JSON.parse(jsonString);
   console.log(nearCity._embedded);
+}
+
+var fillInfoWindow = function(countryInfo) {
+  return '<h3>' + countryInfo.formatted_address + '</h3>'
 }
