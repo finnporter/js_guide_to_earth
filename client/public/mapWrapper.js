@@ -58,7 +58,6 @@ MapWrapper.prototype.addMarker = function(evt) {
   return '<p>Not recommended by administration</p>'
 }
 
-
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
   var geocoder = new google.maps.Geocoder;
