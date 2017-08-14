@@ -1,3 +1,6 @@
+var MapWrapper = require('./mapWrapper.js');
+var ApiProcessing = require('./apiProcessing');
+
 var makeCountriesRequest = function(url, callback) {
   var request = new XMLHttpRequest();
 
@@ -14,15 +17,18 @@ var requestCountriesComplete = function() {
   var countries = JSON.parse(jsonString);
   console.log(countries);
 
-  getCountryNames(countries);
-  getCountryArea(countries);
-  getCountryPopulation(countries);
-  getCountryRegions(countries);
-  getCountryBorders(countries);
+  var countriesApi = new ApiProcessing(); 
+  
+  countriesApi.getCountryNames(countries);
+  countriesApi.getCountryArea(countries);
+  countriesApi.getCountryPopulation(countries);
+  countriesApi.getCountryRegions(countries);
+  countriesApi.getCountryBorders(countries);
 };
 
 var app = function() {
- renderMap();
+ var mainMap = new MapWrapper();
+ mainMap.renderMap();
 
  var url = 'https://restcountries.eu/rest/v2/all';
  makeCountriesRequest(url, requestCountriesComplete)

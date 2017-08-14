@@ -1,13 +1,16 @@
+var ApiProcessing = function() {
+};
 //processes [countries] in a way that will make it easier for the info window to display
-var getCountryNames = function(countries) {
-  var countryNames = [];
+ApiProcessing.prototype.getCountryNames = function(countries) {
+  countryNames = [];
   countries.forEach(function(country) {
     countryNames.push(country.name);
   });
+  // transfer(countryNames);
   return countryNames;
 };
 
-var getCountryArea = function(countries) {
+ApiProcessing.prototype.getCountryArea = function(countries) {
   var countryAreas = [];
   var country = {};
   countryAreas = countries.map(function(country) {
@@ -18,7 +21,7 @@ var getCountryArea = function(countries) {
   return countryAreas;
 };
 
-var getCountryPopulation = function(countries) {
+ApiProcessing.prototype.getCountryPopulation = function(countries) {
   var countryPopulations = [];
   var country = {};
   countryPopulations = countries.map(function(country) {
@@ -29,7 +32,7 @@ var getCountryPopulation = function(countries) {
   return countryPopulations;
 };
 
-var getCountryRegions = function(countries) {
+ApiProcessing.prototype.getCountryRegions = function(countries) {
   var countryRegions = [];
   var country = {};
   countryRegions = countries.map(function(country) {
@@ -40,7 +43,7 @@ var getCountryRegions = function(countries) {
   return countryRegions;
 };
 
-var getCountryBorders = function(countries) {
+ApiProcessing.prototype.getCountryBorders = function(countries) {
   var countryBorders = [];
   var country = {};
   countryBorders = countries.map(function(country) {
@@ -50,3 +53,5 @@ var getCountryBorders = function(countries) {
   });
   return countryBorders;
 };
+
+module.exports = ApiProcessing;
