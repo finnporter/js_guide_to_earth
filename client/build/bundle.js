@@ -117,7 +117,7 @@ window.addEventListener('load', app);
 /***/ (function(module, exports) {
 
 var MapWrapper = function(countriesInfo) {
-  this.countryInfo = countriesInfo;
+  this.countriesInfo = countriesInfo;
   this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
@@ -147,9 +147,29 @@ MapWrapper.prototype.addMarker = function(evt) {
   }
 }
 
-MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
-  return '<h3>' + countryInfo.formatted_address + '</h3>'
+// for (country1 of countryNames) {
+//   for (country2 of countryInfo.formatted_address) {
+//     if (country1 === country2) {
+  //   } else {
+  //     return "Not a country"
+  //   }
+  //   }
+  // }
+
+MapWrapper.prototype.fillInfoWindow = function(info) {
+  // console.log(this.countryInfo.name)
+  for (country of this.countriesInfo.name) {
+      if (country === info.formatted_address) {
+      return '<h3>' + country + '\n' +
+      'dgfdsfgd' + '\n' +
+      'fdfsdfds' + '</h3>'
+        console.log(country)
+      }
+     
+    }
+  return '<p>Not recommended by administration</p>'
 }
+
 
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
@@ -158,7 +178,7 @@ MapWrapper.prototype.countriesSearch = function(evt, marker) {
     this.country = results.pop()
 
     marker.bindPopup(this.fillInfoWindow(this.country));
-    console.log(this.country.formatted_address)
+    // console.log(this.country.formatted_address)
   // last array in every click contains the countries name
 }.bind(this));
 }
@@ -182,19 +202,6 @@ MapWrapper.prototype.requestComplete = function() {
   var nearCity = JSON.parse(jsonString);
   console.log(nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
 }
-
-
-// var fillInfoWindow = function(countryInfo, countryNames) {
-//   for (country1 of countryNames) {
-//     for (country2 of countryInfo.formatted_address) {
-//       if (country1 === country2) {
-//         return '<h3>' + country1 + 'random info' + '</h3>'
-//       } else {
-//         return "Not a country"
-//       }
-//       }
-//     }
-//   }
 
 module.exports = MapWrapper;
 
