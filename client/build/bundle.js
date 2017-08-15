@@ -107,6 +107,7 @@ window.addEventListener('load', app);
 
 var _ = __webpack_require__(3);
 
+//constructor for mainMap
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;
   this.options = { sky: true, zoom: 2.0, position: [55.9533, 3.1883] };
@@ -137,6 +138,66 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
+  MapWrapper.prototype.searchCity = function(evt, marker) {
+    var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
+
+    this.makeRequest(url, function (cityData) { // this anonymous function is requestComplete
+      var nearestCity = cityData._embedded["location:nearest-cities"]
+
+      // nearestCities might be null 
+      if (nearestCity === null) {
+        var nearCity = "Good landing spot. No cities nearby."
+      }
+      else {
+        var nearCity = (nearestCity[0]._links["location:nearest-city"].name);
+      }
+
+      this.geocode(marker, nearCity, evt)
+    }.bind(this));
+  };
+  
+  MapWrapper.prototype.makeRequest = function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', function () {
+      if (this.status !== 200) return;
+
+      var jsonString = this.responseText;
+      var data = JSON.parse(jsonString);
+      callback(data)
+    });
+    request.open("GET", url);
+    request.send();
+  };
+
+  MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+      console.log('results from geocode', results.length)
+
+      if (results.length === 0) {
+        nearCity = "uncharted"
+        this.fillInfoWindow(marker, nearCity);
+      }
+      else {
+        this.country = results.pop()
+        console.log(this.country)
+        this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
+      }
+    }.bind(this));
+  }
+
+  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
+    var cleanedCountryNames = {
+      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
+      "United States": "United States of America",
+      "Russia": "Russian Federation",
+      "Czechia": "Czech Republic",
+      "uncharted": "Unless you're vehicles can land on water. Stay away!"
+    };
+
+    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
+  };
+
   MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
     // console.log(clickedInfo)
     // if (nearCity === "uncharted") {
@@ -155,68 +216,6 @@ MapWrapper.prototype.addMarker = function(evt) {
               this.unmatchedCountries(marker, nearCity, clickedInfo);
             }
   };
-
-  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
-    var cleanedCountryNames = {
-      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
-      "United States": "United States of America",
-      "Russia": "Russian Federation",
-      "Czechia": "Czech Republic",
-      "uncharted": "Unless you're vehicles can land on water. Stay away!"
-    };
-
-    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
-  };
-
-  MapWrapper.prototype.searchCity = function(evt, marker) {
-    var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-
-    this.makeRequest(url, function (cityData) { // this anonymous function is requestComplete
-      var nearestCity = cityData._embedded["location:nearest-cities"]
-
-      // nearestCities might be null 
-      if (nearestCity === null) {
-        var nearCity = "Good landing spot. No cities nearby."
-      }
-      else {
-        var nearCity = (nearestCity[0]._links["location:nearest-city"].name);
-      }
-
-
-      this.geocode(marker, nearCity, evt)
-    }.bind(this));
-  };
-
-  MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
-    var geocoder = new google.maps.Geocoder;
-    geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-      console.log('results from geocode', results)
-
-      if (results.length === 0) {
-        nearCity = "uncharted"
-        this.fillInfoWindow(marker, nearCity);
-      }
-      else {
-        this.country = results.pop()
-        console.log(this.country)
-        this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
-      }
-    }.bind(this));
-  }
-
-  MapWrapper.prototype.makeRequest = function(url, callback) {
-    var request = new XMLHttpRequest();
-    request.addEventListener('load', function () {
-      if (this.status !== 200) return;
-
-      var jsonString = this.responseText;
-      var data = JSON.parse(jsonString);
-      callback(data)
-    });
-    request.open("GET", url);
-    request.send();
-  };
-
 
 module.exports = MapWrapper;
 
