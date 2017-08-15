@@ -137,9 +137,11 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-  MapWrapper.prototype.fillInfoWindow = function(clickedInfo, marker, nearCity) {
+  MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
     // console.log(clickedInfo)
-    
+    // if (nearCity === "uncharted") {
+    //   clickedInfo = "uncharted"
+    // }
     var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
     // console.log(country)
     if (country !== undefined){
@@ -154,17 +156,16 @@ MapWrapper.prototype.addMarker = function(evt) {
             }
   };
 
-  MapWrapper.prototype.unmatchedCountries = function(clickedInfo, marker, nearCity) {
-    var unmatchedCounts = ['States of America', 'Kingdom of Great Britain and Northern Ireland', 'Russia', 'Czechia'];
-
+  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
     var cleanedCountryNames = {
       "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
       "United States": "United States of America",
       "Russia": "Russian Federation",
-      "Czechia": "Czech Republic"
+      "Czechia": "Czech Republic",
+      "uncharted": "Unless you're vehicles can land on water. Stay away!"
     };
 
-    this.fillInfoWindow(cleanedCountryNames[clickedInfo], marker, nearCity);
+    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
   };
 
   MapWrapper.prototype.searchCity = function(evt, marker) {
@@ -175,30 +176,30 @@ MapWrapper.prototype.addMarker = function(evt) {
 
       // nearestCities might be null 
       if (nearestCity === null) {
-        var nearCity = "Can't land here!"
+        var nearCity = "Good landing spot. No cities nearby."
       }
       else {
         var nearCity = (nearestCity[0]._links["location:nearest-city"].name);
       }
 
 
-      this.geocode(evt, marker, nearCity)
+      this.geocode(marker, nearCity, evt)
     }.bind(this));
   };
 
-  MapWrapper.prototype.geocode = function(evt, marker, nearCity) {
+  MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
     var geocoder = new google.maps.Geocoder;
     geocoder.geocode({ 'location': evt.latlng}, function(results, status){
       console.log('results from geocode', results)
 
       if (results.length === 0) {
-        // we can't get a country name
-        this.fillInfoWindow(null, marker, nearCity);
+        nearCity = "uncharted"
+        this.fillInfoWindow(marker, nearCity);
       }
       else {
         this.country = results.pop()
         console.log(this.country)
-        this.fillInfoWindow(this.country.formatted_address, marker, nearCity);
+        this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
       }
     }.bind(this));
   }
