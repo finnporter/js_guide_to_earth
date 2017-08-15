@@ -43,7 +43,8 @@ MapWrapper.prototype.fillInfoWindow = function(info) {
 
   for (country of this.countriesInfo.name) {
     if (country === info.formatted_address) {
-      console.log(this.countriesInfo.population)
+
+      console.log(this.countriesInfo.stats[0]["population"]) //new way of accessing stats
 
       return '<h3>' + country + '</h3>' + '<br>' +
       this.countriesInfo.population.find(function(countryObject){

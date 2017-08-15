@@ -18,14 +18,16 @@ var requestCountriesComplete = function() {
   // console.log(countries);
 
   var countriesApi = new ApiProcessing(); 
-  
+
   var countriesInfo = {
   name: countriesApi.getCountryNames(countries),
-  area: countriesApi.getCountryArea(countries),
-  population: countriesApi.getCountryPopulation(countries),
-  region: countriesApi.getCountryRegions(countries),
-  border: countriesApi.getCountryBorders(countries)
+  stats: countriesApi.processCountriesApi(countries)
+  // area: countriesApi.getCountryArea(countries),
+  // population: countriesApi.getCountryPopulation(countries),
+  // region: countriesApi.getCountryRegions(countries),
+  // border: countriesApi.getCountryBorders(countries)
 };
+console.log(countriesInfo);
 
   var mainMap = new MapWrapper(countriesInfo);
   mainMap.renderMap();
