@@ -28,55 +28,51 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
-  console.log(this.countriesInfo)
+  MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
+    console.log(this.countriesInfo)
 
-      //console.log(this.countriesInfo.stats[0]["name"]) //new way of accessing stats
+    for (country of this.countriesInfo.stats) {
+      if (country.name === clickedInfo.formatted_address) {
+        return  '<h2>' + country.name + '</h2>' + '<br>' +
+        '<p>' + 'Population: ' + country.population + '<br>' +
+        '<p>' + 'Region: ' + country.region + '<br>' +
+        '<p>' + 'Area: ' + country.area + '<br>' +
+        '<p>' + 'Nearest City: ' + returnNearCity
+        console.log(country)
+      }
+    }
+  };
 
-      for (country of this.countriesInfo.stats) {
-        if (country.name === clickedInfo.formatted_address) {
-          return  '<h2>' + country.name + '</h2>' + '<br>' +
-          '<p>' + 'Population: ' + country.population + '<br>' +
-          '<p>' + 'Region: ' + country.region + '<br>' +
-          '<p>' + 'Area: ' + country.area + '<br>' +
-          '<p>' + 'Nearest City: ' + returnNearCity
-          console.log(country)
-          }
-        }
-      };
+  MapWrapper.prototype.countriesSearch = function(evt, marker) {
+    this.searchCity(evt);
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+      this.country = results.pop()
 
-MapWrapper.prototype.countriesSearch = function(evt, marker) {
-  this.searchCity(evt);
-  var geocoder = new google.maps.Geocoder;
-  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-    this.country = results.pop()
+      marker.bindPopup(this.fillInfoWindow(this.country));
+    }.bind(this));
+  };
 
-    marker.bindPopup(this.fillInfoWindow(this.country));
-    // console.log(this.country.formatted_address)
-  // last array in every click contains the countries name
-}.bind(this));
-};
+  MapWrapper.prototype.searchCity = function(evt) {
+    var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
+    this.makeRequest(url, this.requestComplete);
+  };
 
-MapWrapper.prototype.searchCity = function(evt) {
-  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-  this.makeRequest(url, this.requestComplete);
-};
+  MapWrapper.prototype.makeRequest = function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', callback);
+    request.open("GET", url);
+    request.send();
+  };
 
-MapWrapper.prototype.makeRequest = function(url, callback) {
-  var request = new XMLHttpRequest();
-  request.addEventListener('load', callback);
-  request.open("GET", url);
-  request.send();
-};
+  MapWrapper.prototype.requestComplete = function() {
+    if (this.status !== 200) return;
 
-MapWrapper.prototype.requestComplete = function() {
-  if (this.status !== 200) return;
-
-  var jsonString = this.responseText;
-  var nearCity = JSON.parse(jsonString);
-  returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
-  return nearCity;
-};
+    var jsonString = this.responseText;
+    var nearCity = JSON.parse(jsonString);
+    returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
+    return nearCity;
+  };
 
 var returnNearCity;
 

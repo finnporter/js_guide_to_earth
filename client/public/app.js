@@ -15,19 +15,11 @@ var requestCountriesComplete = function() {
 
   var jsonString = this.responseText;
   var countries = JSON.parse(jsonString);
-  // console.log(countries);
-
   var countriesApi = new ApiProcessing(); 
-
   var countriesInfo = {
-  name: countriesApi.getCountryNames(countries),
-  stats: countriesApi.processCountriesApi(countries)
-  // area: countriesApi.getCountryArea(countries),
-  // population: countriesApi.getCountryPopulation(countries),
-  // region: countriesApi.getCountryRegions(countries),
-  // border: countriesApi.getCountryBorders(countries)
-};
-console.log(countriesInfo);
+    name: countriesApi.getCountryNames(countries),
+    stats: countriesApi.processCountriesApi(countries)
+  };
 
   var mainMap = new MapWrapper(countriesInfo);
   mainMap.renderMap();

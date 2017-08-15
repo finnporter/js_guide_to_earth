@@ -84,19 +84,11 @@ var requestCountriesComplete = function() {
 
   var jsonString = this.responseText;
   var countries = JSON.parse(jsonString);
-  // console.log(countries);
-
   var countriesApi = new ApiProcessing(); 
-
   var countriesInfo = {
-  name: countriesApi.getCountryNames(countries),
-  stats: countriesApi.processCountriesApi(countries)
-  // area: countriesApi.getCountryArea(countries),
-  // population: countriesApi.getCountryPopulation(countries),
-  // region: countriesApi.getCountryRegions(countries),
-  // border: countriesApi.getCountryBorders(countries)
-};
-console.log(countriesInfo);
+    name: countriesApi.getCountryNames(countries),
+    stats: countriesApi.processCountriesApi(countries)
+  };
 
   var mainMap = new MapWrapper(countriesInfo);
   mainMap.renderMap();
@@ -143,55 +135,51 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
-  console.log(this.countriesInfo)
+  MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
+    console.log(this.countriesInfo)
 
-      //console.log(this.countriesInfo.stats[0]["name"]) //new way of accessing stats
+    for (country of this.countriesInfo.stats) {
+      if (country.name === clickedInfo.formatted_address) {
+        return  '<h2>' + country.name + '</h2>' + '<br>' +
+        '<p>' + 'Population: ' + country.population + '<br>' +
+        '<p>' + 'Region: ' + country.region + '<br>' +
+        '<p>' + 'Area: ' + country.area + '<br>' +
+        '<p>' + 'Nearest City: ' + returnNearCity
+        console.log(country)
+      }
+    }
+  };
 
-      for (country of this.countriesInfo.stats) {
-        if (country.name === clickedInfo.formatted_address) {
-          return  '<h2>' + country.name + '</h2>' + '<br>' +
-          '<p>' + 'Population: ' + country.population + '<br>' +
-          '<p>' + 'Region: ' + country.region + '<br>' +
-          '<p>' + 'Area: ' + country.area + '<br>' +
-          '<p>' + 'Nearest City: ' + returnNearCity
-          console.log(country)
-          }
-        }
-      };
+  MapWrapper.prototype.countriesSearch = function(evt, marker) {
+    this.searchCity(evt);
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+      this.country = results.pop()
 
-MapWrapper.prototype.countriesSearch = function(evt, marker) {
-  this.searchCity(evt);
-  var geocoder = new google.maps.Geocoder;
-  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-    this.country = results.pop()
+      marker.bindPopup(this.fillInfoWindow(this.country));
+    }.bind(this));
+  };
 
-    marker.bindPopup(this.fillInfoWindow(this.country));
-    // console.log(this.country.formatted_address)
-  // last array in every click contains the countries name
-}.bind(this));
-};
+  MapWrapper.prototype.searchCity = function(evt) {
+    var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
+    this.makeRequest(url, this.requestComplete);
+  };
 
-MapWrapper.prototype.searchCity = function(evt) {
-  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-  this.makeRequest(url, this.requestComplete);
-};
+  MapWrapper.prototype.makeRequest = function(url, callback) {
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', callback);
+    request.open("GET", url);
+    request.send();
+  };
 
-MapWrapper.prototype.makeRequest = function(url, callback) {
-  var request = new XMLHttpRequest();
-  request.addEventListener('load', callback);
-  request.open("GET", url);
-  request.send();
-};
+  MapWrapper.prototype.requestComplete = function() {
+    if (this.status !== 200) return;
 
-MapWrapper.prototype.requestComplete = function() {
-  if (this.status !== 200) return;
-
-  var jsonString = this.responseText;
-  var nearCity = JSON.parse(jsonString);
-  returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
-  return nearCity;
-};
+    var jsonString = this.responseText;
+    var nearCity = JSON.parse(jsonString);
+    returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
+    return nearCity;
+  };
 
 var returnNearCity;
 
@@ -221,56 +209,11 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.population = country.population;
     reformattedCountry.region = country.region;
     reformattedCountry.borders = country.borders;
-    // countryStats.push({country.name : reformattedCountry })
     return reformattedCountry;
   });
   console.log(countryStats)
   return countryStats;
 };
-
-// ApiProcessing.prototype.getCountryArea = function(countries) {
-//   var countryAreas = [];
-//   countryAreas = countries.map(function(country) {
-//     var reformattedCountry = {};
-//     reformattedCountry.name = country.name;
-//     reformattedCountry.area = country.area;
-//     return reformattedCountry;
-//   });
-//   return countryAreas;
-// };
-
-// ApiProcessing.prototype.getCountryPopulation = function(countries) {
-//   var countryPopulations = [];
-//   countryPopulations = countries.map(function(country) {
-//     var reformattedCountry = {};
-//     reformattedCountry.name = country.name;
-//     reformattedCountry.population = country.population;
-//     return reformattedCountry;
-//   });
-//   return countryPopulations;
-// };
-
-// ApiProcessing.prototype.getCountryRegions = function(countries) {
-//   var countryRegions = [];
-//   countryRegions = countries.map(function(country) {
-//     var reformattedCountry = {};
-//     reformattedCountry.name = country.name;
-//     reformattedCountry.region = country.region;
-//     return reformattedCountry;
-//   });
-//   return countryRegions;
-// };
-
-// ApiProcessing.prototype.getCountryBorders = function(countries) {
-//   var countryBorders = [];
-//   countryBorders = countries.map(function(country) {
-//     var reformattedCountry = {};
-//     reformattedCountry.name = country.name;
-//     reformattedCountry.borders = country.borders;
-//     return reformattedCountry;
-//   });
-//   return countryBorders;
-// };
 
 module.exports = ApiProcessing;
 
