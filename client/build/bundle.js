@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapWrapper = __webpack_require__(1);
-var ApiProcessing = __webpack_require__(2);
+var ApiProcessing = __webpack_require__(5);
 
 var makeCountriesRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -105,7 +105,7 @@ window.addEventListener('load', app);
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _ = __webpack_require__(3);
+var _ = __webpack_require__(2);
 
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;
@@ -222,38 +222,6 @@ module.exports = MapWrapper;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-var ApiProcessing = function() {
-};
-
-ApiProcessing.prototype.getCountryNames = function(countries) {
-  var countryNames = [];
-  countries.forEach(function(country) {
-    countryNames.push(country.name);
-  });
-  return countryNames;
-};
-
-ApiProcessing.prototype.processCountriesApi = function(countries) {
-  var countryStats = [];
-  countryStats = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry.name = country.name;
-    reformattedCountry.area = country.area;
-    reformattedCountry.population = country.population;
-    reformattedCountry.region = country.region;
-    reformattedCountry.borders = country.borders;
-    return reformattedCountry;
-  });
-  // console.log(countryStats)
-  return countryStats;
-};
-
-module.exports = ApiProcessing;
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17342,10 +17310,10 @@ module.exports = ApiProcessing;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)(module)))
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -17372,7 +17340,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17398,6 +17366,38 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+var ApiProcessing = function() {
+};
+
+ApiProcessing.prototype.getCountryNames = function(countries) {
+  var countryNames = [];
+  countries.forEach(function(country) {
+    countryNames.push(country.name);
+  });
+  return countryNames;
+};
+
+ApiProcessing.prototype.processCountriesApi = function(countries) {
+  var countryStats = [];
+  countryStats = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry.name = country.name;
+    reformattedCountry.area = country.area;
+    reformattedCountry.population = country.population;
+    reformattedCountry.region = country.region;
+    reformattedCountry.borders = country.borders;
+    return reformattedCountry;
+  });
+  // console.log(countryStats)
+  return countryStats;
+};
+
+module.exports = ApiProcessing;
 
 /***/ })
 /******/ ]);

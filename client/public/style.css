@@ -16,7 +16,7 @@ br {
   margin-left:auto;
   margin-right:auto;
   background-image: url("http://i.imgur.com/VXcVUTX.png");
-  z-index: 1;
+  z-index: 0;
 }
 
 /*.earth_overlay{
@@ -73,7 +73,7 @@ br {
     padding-top: 5px;
     padding: 15px 10px;
     margin:9px;
-    margin-top:6px;
+    margin-top:5px;
     margin-bottom:30px;
     margin-left:889px;
     margin-right:30px;
@@ -88,6 +88,7 @@ br {
     background-image: url("aliensmall.png")
 
   }
+  .pic:hover {background-image: url("aliensmallclick.png")}
 
 #footer{
   position: relative;
@@ -101,12 +102,7 @@ br {
   margin-left: auto;
   top: 0px; 
   left: 0px; 
-  transform: rotate(0deg) skew(0deg); 
-  -webkit-transform: rotate(0deg) skew(0deg); 
-  /*border-top: 75px solid #428BCA; 
-  border-left: 60px solid transparent; 
-  border-right: 60px solid transparent;*/
-  background-image: url("lowerdash2.png")
+  background-image: url("lowerdashbar.png")
 }
 
 #oval {
@@ -119,6 +115,7 @@ br {
   left:200px;
   padding-left: 1000px;
   background-image: url("scifidash.jpg")
+
 }
 
 /*#right {
