@@ -134,7 +134,7 @@ MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60)
     marker.addTo(this.earth);
-      console.log(this); //console logs long and lat
+      //console.log(this); //console logs long and lat
 
       this.countriesSearch(evt, marker)
       setTimeout(function() {
@@ -153,25 +153,32 @@ MapWrapper.prototype.addMarker = function(evt) {
 //   }
 // };
 
-MapWrapper.prototype.fillInfoWindow = function(info) {
-  // console.log(this.countriesInfo.name)
+MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
+  console.log(this.countriesInfo)
 
-  for (country of this.countriesInfo.name) {
-    if (country === info.formatted_address) {
+      //console.log(this.countriesInfo.stats[0]["name"]) //new way of accessing stats
 
-      console.log(this.countriesInfo.stats[0]["population"]) //new way of accessing stats
+      for (country of this.countriesInfo.stats) {
+        if (country.name === clickedInfo.formatted_address) {
+          // return  '<h2>' + country + '<h2>' + '<br>' +
+          console.log(country)
 
-      return '<h3>' + country + '</h3>' + '<br>' +
-      this.countriesInfo.population.find(function(countryObject){
-        return country === countryObject.name;
-      }).population + '<br>' +
-      this.countriesInfo.region.find(function(countryObject) {
-        return country === countryObject.name;
-      }).region + '</h3>'
-    }
-  }
-  return '<p>Not recommended by administration</p>'
-};
+          }
+        }
+      }
+
+
+  //     return '<h3>' + country + '</h3>' + '<br>' +
+  //     this.countriesInfo.population.find(function(countryObject){
+  //       return country === countryObject.name;
+  //     }).population + '<br>' +
+  //     this.countriesInfo.region.find(function(countryObject) {
+  //       return country === countryObject.name;
+  //     }).region + '</h3>'
+  //   }
+  // }
+  // return '<p>Not recommended by administration</p>'
+
 
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
@@ -231,8 +238,10 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.population = country.population;
     reformattedCountry.region = country.region;
     reformattedCountry.borders = country.borders;
+    // countryStats.push({country.name : reformattedCountry })
     return reformattedCountry;
   });
+  console.log(countryStats)
   return countryStats;
 };
 

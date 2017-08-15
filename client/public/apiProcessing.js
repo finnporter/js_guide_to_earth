@@ -18,8 +18,10 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.population = country.population;
     reformattedCountry.region = country.region;
     reformattedCountry.borders = country.borders;
+    // countryStats.push({country.name : reformattedCountry })
     return reformattedCountry;
   });
+  console.log(countryStats)
   return countryStats;
 };
 
