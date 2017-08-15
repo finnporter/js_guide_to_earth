@@ -136,17 +136,26 @@ MapWrapper.prototype.addMarker = function(evt) {
   };
 
   MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
-    console.log(this.countriesInfo)
-
+    // console.log(this.countriesInfo.stats)
+    console.log(clickedInfo);
     for (country of this.countriesInfo.stats) {
-      if (country.name === clickedInfo.formatted_address) {
+      if (country.name === clickedInfo) {
         return  '<h2>' + country.name + '</h2>' + '<br>' +
         '<p>' + 'Population: ' + country.population + '<br>' +
         '<p>' + 'Region: ' + country.region + '<br>' +
         '<p>' + 'Area: ' + country.area + '<br>' +
         '<p>' + 'Nearest City: ' + returnNearCity
-        console.log(country)
+      } else {
+        return this.unmatchedCountries(clickedInfo);
       }
+    }
+  };
+
+  MapWrapper.prototype.unmatchedCountries = function(clickedInfo) {
+    var unmatchedCounts = ['United States of America', 'United Kingdom', 'Russia', 'Czechia'];
+
+    if (unmatchedCounts[0].includes(clickedInfo)) {
+      this.fillInfoWindow('United States of America');
     }
   };
 
@@ -156,7 +165,7 @@ MapWrapper.prototype.addMarker = function(evt) {
     geocoder.geocode({ 'location': evt.latlng}, function(results, status){
       this.country = results.pop()
 
-      marker.bindPopup(this.fillInfoWindow(this.country));
+      marker.bindPopup(this.fillInfoWindow(this.country.formatted_address));
     }.bind(this));
   };
 
@@ -211,7 +220,7 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.borders = country.borders;
     return reformattedCountry;
   });
-  console.log(countryStats)
+  // console.log(countryStats)
   return countryStats;
 };
 

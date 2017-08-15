@@ -20,7 +20,7 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.borders = country.borders;
     return reformattedCountry;
   });
-  console.log(countryStats)
+  // console.log(countryStats)
   return countryStats;
 };
 
