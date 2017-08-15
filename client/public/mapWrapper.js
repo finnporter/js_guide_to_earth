@@ -45,7 +45,7 @@ MapWrapper.prototype.addMarker = function(evt) {
               '<p>' + 'Nearest City: ' + nearCity
               marker.bindPopup(html);
             } else {
-              this.unmatchedCountries(clickedInfo, marker, nearCity);
+              this.unmatchedCountries(marker, nearCity, clickedInfo);
             }
   };
 
