@@ -51,7 +51,9 @@ MapWrapper.prototype.addMarker = function(evt) {
 
     var cleanedCountryNames = {
       "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
-      "United States": "United States of America"
+      "United States": "United States of America",
+      "Russia": "Russian Federation",
+      "Czechia": "Czech Republic"
     };
 
     this.fillInfoWindow(cleanedCountryNames[clickedInfo], marker);
