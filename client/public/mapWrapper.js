@@ -17,18 +17,16 @@ MapWrapper.prototype.renderMap = function() {
 
 MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
-
     var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60)
     marker.addTo(this.earth);
       console.log(this); //console logs long and lat
-    
 
-    this.countriesSearch(evt, marker)
-    setTimeout(function() {
-      marker.closePopup()
-    }, 30000)
-  }
-};
+      this.countriesSearch(evt, marker)
+      setTimeout(function() {
+        marker.closePopup()
+      }, 30000)
+    }
+  };
 
 // MapWrapper.prototype.countryPopulation = function(info) {
 //   for (country of this.countriesInfo.name) {
