@@ -15,7 +15,7 @@ var requestCountriesComplete = function() {
 
   var jsonString = this.responseText;
   var countries = JSON.parse(jsonString);
-  console.log(countries);
+  // console.log(countries);
 
   var countriesApi = new ApiProcessing(); 
 

@@ -1,6 +1,6 @@
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;
-  this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
+  this.options = { sky: true, zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
 };
@@ -28,12 +28,24 @@ MapWrapper.prototype.addMarker = function(evt) {
   }
 };
 
+// MapWrapper.prototype.countryPopulation = function(info) {
+//   for (country of this.countriesInfo.name) {
+//     if (country === info.formatted_address) {
+//       this.countriesInfo.population.find(function(countObject) {
+//         return country === countObject.name
+//       }).population
+//     }
+//   }
+// };
+
 MapWrapper.prototype.fillInfoWindow = function(info) {
-  // console.log(this.countryInfo.name)
-  console.log(this.countriesInfo.name)
+  // console.log(this.countriesInfo.name)
+
   for (country of this.countriesInfo.name) {
     if (country === info.formatted_address) {
+
       console.log(this.countriesInfo.stats[0]["population"]) //new way of accessing stats
+
       return '<h3>' + country + '</h3>' + '<br>' +
       this.countriesInfo.population.find(function(countryObject){
         return country === countryObject.name;
@@ -41,7 +53,6 @@ MapWrapper.prototype.fillInfoWindow = function(info) {
       this.countriesInfo.region.find(function(countryObject) {
         return country === countryObject.name;
       }).region + '</h3>'
-
     }
   }
   return '<p>Not recommended by administration</p>'
