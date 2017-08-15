@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;
   this.options = { sky: true, zoom: 2.0, position: [55.9533, 3.1883] };
@@ -24,32 +26,35 @@ MapWrapper.prototype.addMarker = function(evt) {
       this.countriesSearch(evt, marker)
       setTimeout(function() {
         marker.closePopup()
-      }, 30000)
+      }, 5000)
     }
   };
 
-  MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
-    // console.log(this.countriesInfo.stats)
-    console.log(clickedInfo);
-    for (country of this.countriesInfo.stats) {
-      if (country.name === clickedInfo) {
-        return  '<h2>' + country.name + '</h2>' + '<br>' +
-        '<p>' + 'Population: ' + country.population + '<br>' +
-        '<p>' + 'Region: ' + country.region + '<br>' +
-        '<p>' + 'Area: ' + country.area + '<br>' +
-        '<p>' + 'Nearest City: ' + returnNearCity
-      } else {
-        return this.unmatchedCountries(clickedInfo);
-      }
-    }
+  MapWrapper.prototype.fillInfoWindow = function(clickedInfo, marker) {
+    console.log(clickedInfo)
+    var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
+    console.log(country)
+    if (country !== undefined){
+              var html = '<h2>' + country.name + '</h2>' + '<br>' +
+              '<p>' + 'Population: ' + country.population + '<br>' +
+              '<p>' + 'Region: ' + country.region + '<br>' +
+              '<p>' + 'Area: ' + country.area + '<br>' +
+              '<p>' + 'Nearest City: ' + returnNearCity
+              marker.bindPopup(html);
+            } else {
+              this.unmatchedCountries(clickedInfo, marker);
+            }
   };
 
-  MapWrapper.prototype.unmatchedCountries = function(clickedInfo) {
-    var unmatchedCounts = ['United States of America', 'United Kingdom', 'Russia', 'Czechia'];
+  MapWrapper.prototype.unmatchedCountries = function(clickedInfo, marker) {
+    var unmatchedCounts = ['States of America', 'Kingdom of Great Britain and Northern Ireland', 'Russia', 'Czechia'];
 
-    if (unmatchedCounts[0].includes(clickedInfo)) {
-      this.fillInfoWindow('United States of America');
-    }
+    var cleanedCountryNames = {
+      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
+      "United States": "United States of America"
+    };
+
+    this.fillInfoWindow(cleanedCountryNames[clickedInfo], marker);
   };
 
   MapWrapper.prototype.countriesSearch = function(evt, marker) {
@@ -58,7 +63,7 @@ MapWrapper.prototype.addMarker = function(evt) {
     geocoder.geocode({ 'location': evt.latlng}, function(results, status){
       this.country = results.pop()
 
-      marker.bindPopup(this.fillInfoWindow(this.country.formatted_address));
+      this.fillInfoWindow(this.country.formatted_address, marker);
     }.bind(this));
   };
 
@@ -80,7 +85,6 @@ MapWrapper.prototype.addMarker = function(evt) {
     var jsonString = this.responseText;
     var nearCity = JSON.parse(jsonString);
     returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
-    return nearCity;
   };
 
 var returnNearCity;
