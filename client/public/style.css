@@ -68,8 +68,9 @@ br {
 
   .pic {
     width:60px;
-    height: 65px;
+    height: 62px;
     display: inline-block;
+    padding-top: 5px;
     padding: 15px 10px;
     margin:9px;
     margin-top:6px;
@@ -105,7 +106,7 @@ br {
   /*border-top: 75px solid #428BCA; 
   border-left: 60px solid transparent; 
   border-right: 60px solid transparent;*/
-  background-image: url("lowerdash.png")
+  background-image: url("lowerdash2.png")
 }
 
 #oval {
