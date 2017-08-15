@@ -18,10 +18,10 @@ MapWrapper.prototype.renderMap = function() {
 MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
 
-    var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60).addTo(this.earth);
-    button = document.createElement('button')
-    console.log(button); //console logs long and lat
-    marker.appendChild(button)
+    var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60)
+    marker.addTo(this.earth);
+      console.log(this); //console logs long and lat
+    
 
     this.countriesSearch(evt, marker)
     setTimeout(function() {
