@@ -5,6 +5,9 @@ h1 {
 
 }
 
+.we-pp-wrapper{
+  background color: red;
+}
 #earth_div{
   position:relative;
   margin-left:auto;
