@@ -2,7 +2,10 @@ h1 {
   text-align: center;
   font-family: helvetica;
   color:white;
+}
 
+br {
+  line-height: 2%;
 }
 
 .we-pp-wrapper{

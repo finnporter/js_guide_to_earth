@@ -143,16 +143,6 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-// MapWrapper.prototype.countryPopulation = function(info) {
-//   for (country of this.countriesInfo.name) {
-//     if (country === info.formatted_address) {
-//       this.countriesInfo.population.find(function(countObject) {
-//         return country === countObject.name
-//       }).population
-//     }
-//   }
-// };
-
 MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
   console.log(this.countriesInfo)
 
@@ -160,25 +150,15 @@ MapWrapper.prototype.fillInfoWindow = function(clickedInfo) {
 
       for (country of this.countriesInfo.stats) {
         if (country.name === clickedInfo.formatted_address) {
-          // return  '<h2>' + country + '<h2>' + '<br>' +
+          return  '<h2>' + country.name + '</h2>' + '<br>' +
+          '<p>' + 'Population: ' + country.population + '<br>' +
+          '<p>' + 'Region: ' + country.region + '<br>' +
+          '<p>' + 'Area: ' + country.area + '<br>' +
+          '<p>' + 'Nearest City: ' + returnNearCity
           console.log(country)
-
           }
         }
-      }
-
-
-  //     return '<h3>' + country + '</h3>' + '<br>' +
-  //     this.countriesInfo.population.find(function(countryObject){
-  //       return country === countryObject.name;
-  //     }).population + '<br>' +
-  //     this.countriesInfo.region.find(function(countryObject) {
-  //       return country === countryObject.name;
-  //     }).region + '</h3>'
-  //   }
-  // }
-  // return '<p>Not recommended by administration</p>'
-
+      };
 
 MapWrapper.prototype.countriesSearch = function(evt, marker) {
   this.searchCity(evt);
@@ -209,8 +189,11 @@ MapWrapper.prototype.requestComplete = function() {
 
   var jsonString = this.responseText;
   var nearCity = JSON.parse(jsonString);
-  console.log(nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
+  returnNearCity = (nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
+  return nearCity;
 };
+
+var returnNearCity;
 
 module.exports = MapWrapper;
 
