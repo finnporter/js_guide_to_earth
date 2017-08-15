@@ -8,6 +8,7 @@ app.get('/', function(req, res) {
 
 app.use(express.static('client/public'));
 app.use(express.static('client/build'));
+app.use(express.static('client/public/img'));
 
 var server = app.listen(3000, function () {
    var host = server.address().address;
