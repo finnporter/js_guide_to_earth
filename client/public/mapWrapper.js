@@ -1,6 +1,6 @@
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;
-  this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
+  this.options = { sky: true, zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
 };
@@ -28,20 +28,18 @@ MapWrapper.prototype.addMarker = function(evt) {
   }
 };
 
-MapWrapper.prototype.countryPopulation = function(info) {
-  for (country of this.countriesInfo.name) {
-    if (country === info.formatted_address) {
-      this.countriesInfo.population.find(function(countObject) {
-        return country === countObject.name
-      }).population
-    }
-  }
-};
+// MapWrapper.prototype.countryPopulation = function(info) {
+//   for (country of this.countriesInfo.name) {
+//     if (country === info.formatted_address) {
+//       this.countriesInfo.population.find(function(countObject) {
+//         return country === countObject.name
+//       }).population
+//     }
+//   }
+// };
 
 MapWrapper.prototype.fillInfoWindow = function(info) {
   // console.log(this.countriesInfo.name)
-  // var cont = countryPopulation(info);
-  // console.log(cont);
 
   for (country of this.countriesInfo.name) {
     if (country === info.formatted_address) {
