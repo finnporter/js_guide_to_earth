@@ -38,8 +38,6 @@ MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60)
     marker.addTo(this.earth);
-      //console.log(this); //console logs long and lat
-
       this.searchCity(evt, marker)
       setTimeout(function() {
         marker.closePopup()
@@ -50,10 +48,9 @@ MapWrapper.prototype.addMarker = function(evt) {
   MapWrapper.prototype.searchCity = function(evt, marker) {
     var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
 
-    this.makeRequest(url, function (cityData) { // this anonymous function is requestComplete
+    this.makeRequest(url, function (cityData) {
       var nearestCity = cityData._embedded["location:nearest-cities"]
 
-      // nearestCities might be null 
       if (nearestCity === null) {
         var nearCity = "Good landing spot. No cities nearby."
       }
@@ -81,11 +78,9 @@ MapWrapper.prototype.addMarker = function(evt) {
   MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
     var geocoder = new google.maps.Geocoder;
     geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-      console.log('results from geocode', results.length)
 
       if (results.length === 0) {
         nearCity = "Uncharted Waters";
-        // console.log(nearCity);
         this.fillInfoWindow(marker, nearCity);
       }
       else {
@@ -99,9 +94,7 @@ MapWrapper.prototype.addMarker = function(evt) {
   MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
     console.log(clickedInfo);
     console.log(nearCity);
-    // up to here both above variables are uncharted
     var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
-    // console.log(country)
     if (nearCity === "Uncharted Waters") {
       var html = '<h2>' + "Unless your vehicle can land on water, stay away!" + '</h2>'
       marker.bindPopup(html);
@@ -184,7 +177,5 @@ MapWrapper.prototype.addMarker = function(evt) {
       this.animated = false;
     }
   };
-
-
 
   module.exports = MapWrapper;
