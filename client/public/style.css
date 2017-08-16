@@ -1,7 +1,14 @@
+@font-family{ 
+  font-family: Anuratiimport;
+  src:url("Anurati.otf");
+}
+
 h1 {
   text-align: center;
-  font-family: helvetica;
-  color:white;
+  font-family: Anurati;
+  color: #1757d6;
+  font-size: 50px;
+  font-kerning: 20px;
 }
 
 
@@ -13,7 +20,7 @@ h1 {
   z-index: 0;
 }
 
-.earth_overlay{
+/*.earth_overlay{
   position: absolute;
   top:50px;
   width: 1200px;
@@ -28,7 +35,7 @@ h1 {
   text-align: center;
   z-index: 2;
   background-image: url("http://i.imgur.com/VXcVUTX.png");
-  }
+  }*/
 
   .button {
     width:80px;
@@ -51,14 +58,15 @@ h1 {
     /*box-shadow: 0 9px #999;*/
   }
 
-  .button:hover {background-color: #3e8e41}
+  .button:hover {
+    background-color: #3e8e41
+  }
 
   .button:active {
     background-color: #3e8e41;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
-
 
   .pic {
     width:60px;
@@ -79,10 +87,9 @@ h1 {
     border: none;
     border-radius: 0px;
     background-image: url("aliensmall.png")
-
   }
 
-  #footer{
+  #footer {
     position: relative;
     display:flex;
     height: 130px; 
@@ -112,16 +119,15 @@ h1 {
     background-image: url("scifidash.jpg")
   }
 
-  select{
+  select {
     display:inline-block;
     margin-left: 300px;
     position:relative;
     padding-top:100px;
     padding-bottom:50px;
+    -webkit-appearance: none; 
   }
 
   body {
     background-color: black;
-
-
   }
