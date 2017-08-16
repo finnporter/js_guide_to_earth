@@ -100,7 +100,7 @@ var requestCountriesComplete = function() {
   select.addEventListener('change', mainMap.flyToCountry.bind(mainMap));
 
   var button = document.querySelector('.button');
-  button.addEventListener('click', mainMap.toggleButton);
+  button.addEventListener('click', mainMap.toggleButton.bind(mainMap));
 };
 
 var populateList = function(countriesInfo) {
@@ -142,6 +142,7 @@ var MapWrapper = function(countriesInfo) {
   this.options = { sky: true, zoom: 2.0, position: [55.9533, 3.1883] };
   this.earth = new WE.map('earth_div', this.options); 
   this.country = null;
+  this.animated = true;
 };
 
 MapWrapper.prototype.renderMap = function() {
@@ -152,16 +153,21 @@ MapWrapper.prototype.renderMap = function() {
     attribution: "NASA"
   }).addTo(this.earth);
   this.earth.on("dblclick", this.addMarker.bind(this));
+  this.animateEarth();
+};
 
+MapWrapper.prototype.animateEarth = function() {
   var before = null;
   window.requestAnimationFrame(function animate(now) {
-    var c = this.earth.getPosition();
-    var elapsed = before? now - before: 0;
-    before = now;
-    this.earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
-    window.requestAnimationFrame(animate.bind(this));
-  }.bind(this));
-};
+    if (this.animated === true) {
+      var c = this.earth.getPosition();
+      var elapsed = before? now - before: 0;
+      before = now;
+      this.earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+      window.requestAnimationFrame(animate.bind(this));
+    };
+  }.bind(this))
+}
 
 MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
@@ -237,10 +243,9 @@ MapWrapper.prototype.addMarker = function(evt) {
       return;
     }
 
-    var population = numeral(country.population).format("0,0");
-    var area = numeral(country.area).format("0,0");
-
     if (country !== undefined){
+      var population = numeral(country.population).format("0,0");
+      var area = numeral(country.area).format("0,0");
       var html = '<h2>' + country.name + '</h2>' + '<br>' +
       '<p>' + 'Population: ' + population + '<br>' +
       '<p>' + 'Region: ' + country.region + '<br>' +
@@ -305,10 +310,13 @@ MapWrapper.prototype.addMarker = function(evt) {
 
   MapWrapper.prototype.toggleButton = function() {
     var overlay = document.querySelector('.earth_overlay');
-    if (overlay.style.display === 'none') {
+    if (overlay.style.display === 'none' && this.animated === false) {
       overlay.style.display = 'block';
+      this.animated = true;
+      this.animateEarth();
     } else {
       overlay.style.display = 'none';
+      this.animated = false;
     }
   };
 

@@ -31,7 +31,7 @@ var requestCountriesComplete = function() {
   select.addEventListener('change', mainMap.flyToCountry.bind(mainMap));
 
   var button = document.querySelector('.button');
-  button.addEventListener('click', mainMap.toggleButton);
+  button.addEventListener('click', mainMap.toggleButton.bind(mainMap));
 };
 
 var populateList = function(countriesInfo) {
