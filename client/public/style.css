@@ -118,14 +118,7 @@ h1 {
     position:relative;
     padding-top:100px;
     padding-bottom:50px;
-    -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none;       /* remove default arrow */
-    background-image: url(...);   /* add custom arrow */
   }
-
-
-
 
   body {
     background-color: black;
