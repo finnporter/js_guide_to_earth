@@ -226,12 +226,13 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
 
     var population = numeral(country.population).format("0,0");
+    var area = numeral(country.area).format("0,0");
 
     if (country !== undefined){
       var html = '<h2>' + country.name + '</h2>' + '<br>' +
       '<p>' + 'Population: ' + population + '<br>' +
       '<p>' + 'Region: ' + country.region + '<br>' +
-      '<p>' + 'Area: ' + country.area + '<br>' +
+      '<p>' + 'Area: ' + area + " km2" + '<br>' +
       '<p>' + 'Nearest City: ' + nearCity
       marker.bindPopup(html);
     } else {
