@@ -29,6 +29,45 @@ h1 {
   z-index: 2;
   background-image: url("http://i.imgur.com/VXcVUTX.png");
   }
+  .alienlanguage{
+    position: absolute;
+    top:50px;
+    aside: margin-right;
+    width: 110px;
+    height: 186px;
+    overflow:visible;
+    pointer-events: none;
+    margin-right:0px;
+    margin-left:10px;
+    padding-top:100px;
+    padding-bottom: 270px;
+    /*background: rgba(null);*/
+    text-align: center;
+    z-index: 2;
+    background-image: url("language.png");
+    opacity: 0.2;
+
+  }
+
+  .alienlanguage2{
+    position: absolute;
+    top:50px;
+    aside: margin-right;
+    width: 110px;
+    height: 186px;
+    overflow:visible;
+    pointer-events: none;
+    margin-right:0px;
+    margin-left:1088px;
+    padding-top:100px;
+    padding-bottom: 270px;
+    /*background: rgba(null);*/
+    text-align: center;
+    z-index: 2;
+    background-image: url("language.png");
+    opacity: 0.2;
+
+  }
 
   .button {
     width:80px;
