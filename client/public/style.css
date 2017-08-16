@@ -20,7 +20,7 @@ h1 {
   z-index: 0;
 }
 
-/*.earth_overlay{
+.earth_overlay{
   position: absolute;
   top:50px;
   width: 1200px;
@@ -35,7 +35,7 @@ h1 {
   text-align: center;
   z-index: 2;
   background-image: url("http://i.imgur.com/VXcVUTX.png");
-  }*/
+  }
 
   .button {
     width:80px;
