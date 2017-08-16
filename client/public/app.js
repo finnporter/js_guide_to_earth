@@ -30,7 +30,7 @@ var app = function() {
  makeCountriesRequest(url, requestCountriesComplete);
 };
 
-window.addEvent Listener('load', app);
+window.addEventListener('load', app);
 // window.addEventListener('load', function() {
 //   new PieChart();
 //   new ColumnChart();

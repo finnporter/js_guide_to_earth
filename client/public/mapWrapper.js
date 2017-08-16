@@ -15,7 +15,7 @@ MapWrapper.prototype.renderMap = function() {
     sky:true,
     attribution: "NASA"
   }).addTo(this.earth);
-  this.earth.on("click", this.addMarker.bind(this));
+  this.earth.on("dblclick", this.addMarker.bind(this));
 };
 
 MapWrapper.prototype.addMarker = function(evt) {
