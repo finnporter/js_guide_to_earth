@@ -21,13 +21,34 @@ var requestCountriesComplete = function() {
     stats: countriesApi.processCountriesApi(countries)
   };
 
+    populateList(countriesInfo);
+
+
   var mainMap = new MapWrapper(countriesInfo);
   mainMap.renderMap();
+
+  var select = document.querySelector('select');
+  select.addEventListener('change', mainMap.flyToCountry.bind(mainMap));
 };
+
+var populateList = function(countriesInfo) {
+  // console.log(countries);
+  console.log(countriesInfo);
+  var select = document.querySelector('select');
+  countriesInfo.name.forEach(function(country) {
+    var option = document.createElement('option');
+    option.innerText = country;
+  
+    select.appendChild(option);
+
+  });
+}
 
 var app = function() {
  var url = 'https://restcountries.eu/rest/v2/all';
  makeCountriesRequest(url, requestCountriesComplete);
+
+ 
 };
 
 window.addEventListener('load', app);

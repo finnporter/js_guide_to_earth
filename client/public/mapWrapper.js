@@ -114,4 +114,22 @@ MapWrapper.prototype.addMarker = function(evt) {
     this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
   };
 
+  MapWrapper.prototype.populateList = function() {
+    // console.log(countries);
+    console.log(this.countriesInfo);
+    var select = document.querySelector('select');
+    this.countriesInfo.name.forEach(function(country) {
+      var option = document.createElement('option');
+      option.innerText = country;
+    
+      select.appendChild(option);
+    });
+
+  }
+
+  MapWrapper.prototype.flyToCountry = function() {
+    console.log("hey")
+    this.earth.setView([0,0], 3.0)
+  }
+
 module.exports = MapWrapper;
