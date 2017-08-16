@@ -81,15 +81,16 @@ MapWrapper.prototype.addMarker = function(evt) {
   };
 
   MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
-
-    if (nearCity === "Uncharted Waters") {
-      clickedInfo = "Uncharted Waters"
-    }
     console.log(clickedInfo);
     console.log(nearCity);
     // up to here both above variables are uncharted
     var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
     // console.log(country)
+    if (nearCity === "Uncharted Waters") {
+      var html = '<h2>' + "Unless your vehicle can land on water, stay away!" + '</h2>'
+      marker.bindPopup(html);
+      return;
+    }
     if (country !== undefined){
               var html = '<h2>' + country.name + '</h2>' + '<br>' +
               '<p>' + 'Population: ' + country.population + '<br>' +
@@ -107,8 +108,7 @@ MapWrapper.prototype.addMarker = function(evt) {
       "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
       "United States": "United States of America",
       "Russia": "Russian Federation",
-      "Czechia": "Czech Republic",
-      "Uncharted Waters": "Unless you're vehicles can land on water. Stay away!"
+      "Czechia": "Czech Republic"
     };
 
     this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);

@@ -30,8 +30,8 @@ var app = function() {
  makeCountriesRequest(url, requestCountriesComplete);
 };
 
-// window.addEventListener('load', app);
-window.addEventListener('load', function() {
-  new PieChart();
-  new ColumnChart();
-})
+window.addEvent Listener('load', app);
+// window.addEventListener('load', function() {
+//   new PieChart();
+//   new ColumnChart();
+// })
