@@ -68,34 +68,26 @@ MapWrapper.prototype.addMarker = function(evt) {
       console.log('results from geocode', results.length)
 
       if (results.length === 0) {
-        nearCity = "uncharted"
+        nearCity = "Uncharted Waters";
+        // console.log(nearCity);
         this.fillInfoWindow(marker, nearCity);
       }
       else {
-        this.country = results.pop()
-        console.log(this.country)
+        this.country = results.pop();
+        console.log(this.country);
         this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
       }
     }.bind(this));
-  }
-
-  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
-    var cleanedCountryNames = {
-      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
-      "United States": "United States of America",
-      "Russia": "Russian Federation",
-      "Czechia": "Czech Republic",
-      "uncharted": "Unless you're vehicles can land on water. Stay away!"
-    };
-
-    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
   };
 
   MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
-    // console.log(clickedInfo)
-    // if (nearCity === "uncharted") {
-    //   clickedInfo = "uncharted"
-    // }
+
+    if (nearCity === "Uncharted Waters") {
+      clickedInfo = "Uncharted Waters"
+    }
+    console.log(clickedInfo);
+    console.log(nearCity);
+    // up to here both above variables are uncharted
     var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
     // console.log(country)
     if (country !== undefined){
@@ -108,6 +100,18 @@ MapWrapper.prototype.addMarker = function(evt) {
             } else {
               this.unmatchedCountries(marker, nearCity, clickedInfo);
             }
+  };
+
+  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
+    var cleanedCountryNames = {
+      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
+      "United States": "United States of America",
+      "Russia": "Russian Federation",
+      "Czechia": "Czech Republic",
+      "Uncharted Waters": "Unless you're vehicles can land on water. Stay away!"
+    };
+
+    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
   };
 
 module.exports = MapWrapper;
