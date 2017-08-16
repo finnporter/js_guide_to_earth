@@ -133,7 +133,7 @@ MapWrapper.prototype.addMarker = function(evt) {
     var test = optionValue.value
     console.log(test)
     var singleCountry = _.find(this.countriesInfo.stats, {name: test})
-    this.earth.setView([singleCountry.latlng[0], singleCountry.latlng[1]], 3.0);
+    this.earth.setView([singleCountry.latlng[0], singleCountry.latlng[1]], 5.0);
   }
 
 module.exports = MapWrapper;
