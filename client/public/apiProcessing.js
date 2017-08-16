@@ -18,6 +18,7 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
     reformattedCountry.population = country.population;
     reformattedCountry.region = country.region;
     reformattedCountry.borders = country.borders;
+    reformattedCountry.latlng = country.latlng;
     return reformattedCountry;
   });
   // console.log(countryStats)
