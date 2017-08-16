@@ -224,15 +224,15 @@ MapWrapper.prototype.addMarker = function(evt) {
       return;
     }
     if (country !== undefined){
-              var html = '<h2>' + country.name + '</h2>' + '<br>' +
-              '<p>' + 'Population: ' + country.population + '<br>' +
-              '<p>' + 'Region: ' + country.region + '<br>' +
-              '<p>' + 'Area: ' + country.area + '<br>' +
-              '<p>' + 'Nearest City: ' + nearCity
-              marker.bindPopup(html);
-            } else {
-              this.unmatchedCountries(marker, nearCity, clickedInfo);
-            }
+      var html = '<h2>' + country.name + '</h2>' + '<br>' +
+      '<p>' + 'Population: ' + country.population + '<br>' +
+      '<p>' + 'Region: ' + country.region + '<br>' +
+      '<p>' + 'Area: ' + country.area + '<br>' +
+      '<p>' + 'Nearest City: ' + nearCity
+      marker.bindPopup(html);
+    } else {
+      this.unmatchedCountries(marker, nearCity, clickedInfo);
+    }
   };
 
   MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
@@ -253,7 +253,7 @@ MapWrapper.prototype.addMarker = function(evt) {
     this.countriesInfo.name.forEach(function(country) {
       var option = document.createElement('option');
       option.innerText = country;
-    
+
       select.appendChild(option);
     });
 
@@ -265,10 +265,30 @@ MapWrapper.prototype.addMarker = function(evt) {
     var test = optionValue.value
     console.log(test)
     var singleCountry = _.find(this.countriesInfo.stats, {name: test})
-    this.earth.flyTo(singleCountry.latlng[0], singleCountry.latlng[1], singleCountry.area * 1);
+    this.earth.flyTo(singleCountry.latlng[0], singleCountry.latlng[1], this.zoomSizeCap(singleCountry));
   }
 
-module.exports = MapWrapper;
+  MapWrapper.prototype.zoomSizeCap = function(singleCountry) {
+    if (singleCountry.area <= 50000) {
+      return singleCountry.area * 50
+    }
+    else if (singleCountry.area > 50000 && singleCountry.area <= 110000 ) {
+      return singleCountry.area * 15;
+    } else if (singleCountry.area > 110000 && singleCountry.area <= 500000) {
+      return singleCountry.area * 10;
+    } else if (singleCountry.area > 500000 && singleCountry.area <= 2000000) {
+      return singleCountry.area * 8;
+    }
+    else if (singleCountry.area <= 17000000) { 
+      return singleCountry.area;
+    } else {
+      return singleCountry.area * 0.7;
+    }
+  }
+
+
+
+  module.exports = MapWrapper;
 
 /***/ }),
 /* 2 */
