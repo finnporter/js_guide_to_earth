@@ -128,8 +128,12 @@ MapWrapper.prototype.addMarker = function(evt) {
   }
 
   MapWrapper.prototype.flyToCountry = function() {
-    console.log("hey")
-    this.earth.setView([0,0], 3.0)
+    //console.log(this.countriesInfo.stats)
+    var optionValue = document.querySelector('select');
+    var test = optionValue.value
+    console.log(test)
+    var singleCountry = _.find(this.countriesInfo.stats, {name: test})
+    this.earth.setView([singleCountry.latlng[0], singleCountry.latlng[1]], 3.0);
   }
 
 module.exports = MapWrapper;
