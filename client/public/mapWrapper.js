@@ -17,6 +17,15 @@ MapWrapper.prototype.renderMap = function() {
     attribution: "NASA"
   }).addTo(this.earth);
   this.earth.on("dblclick", this.addMarker.bind(this));
+
+  var before = null;
+  window.requestAnimationFrame(function animate(now) {
+    var c = this.earth.getPosition();
+    var elapsed = before? now - before: 0;
+    before = now;
+    this.earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+    window.requestAnimationFrame(animate.bind(this));
+  }.bind(this));
 };
 
 MapWrapper.prototype.addMarker = function(evt) {
@@ -157,7 +166,11 @@ MapWrapper.prototype.addMarker = function(evt) {
     } else {
       return singleCountry.area * 0.7;
     }
-  }
+  };
+
+  // MapWrapper.prototype.toggleOverlay = function() {
+  //   var button = document.querySelector('')
+  // }
 
 
 
