@@ -126,7 +126,10 @@ h1 {
     padding-top:100px;
     padding-bottom:50px;
     -webkit-appearance: none; 
+    background-color: #343e47;
   }
+
+  select option { padding: 0 4px; }
 
   body {
     background-color: black;
