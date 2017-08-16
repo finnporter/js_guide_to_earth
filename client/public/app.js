@@ -31,3 +31,7 @@ var app = function() {
 };
 
 window.addEventListener('load', app);
+// window.addEventListener('load', function() {
+//   new PieChart();
+//   new ColumnChart();
+// })
