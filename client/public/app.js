@@ -29,6 +29,9 @@ var requestCountriesComplete = function() {
 
   var select = document.querySelector('select');
   select.addEventListener('change', mainMap.flyToCountry.bind(mainMap));
+
+  var button = document.querySelector('.button');
+  button.addEventListener('click', mainMap.toggleButton);
 };
 
 var populateList = function(countriesInfo) {

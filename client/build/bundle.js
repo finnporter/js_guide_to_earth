@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapWrapper = __webpack_require__(1);
-var ApiProcessing = __webpack_require__(5);
+var ApiProcessing = __webpack_require__(6);
 
 var makeCountriesRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -98,6 +98,9 @@ var requestCountriesComplete = function() {
 
   var select = document.querySelector('select');
   select.addEventListener('change', mainMap.flyToCountry.bind(mainMap));
+
+  var button = document.querySelector('.button');
+  button.addEventListener('click', mainMap.toggleButton);
 };
 
 var populateList = function(countriesInfo) {
@@ -131,7 +134,7 @@ window.addEventListener('load', app);
 /***/ (function(module, exports, __webpack_require__) {
 
 var _ = __webpack_require__(2);
-var numeral = __webpack_require__(6);
+var numeral = __webpack_require__(5);
 
 //constructor for mainMap
 var MapWrapper = function(countriesInfo) {
@@ -300,9 +303,14 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-  // MapWrapper.prototype.toggleOverlay = function() {
-  //   var button = document.querySelector('')
-  // }
+  MapWrapper.prototype.toggleButton = function() {
+    var overlay = document.querySelector('.earth_overlay');
+    if (overlay.style.display === 'none') {
+      overlay.style.display = 'block';
+    } else {
+      overlay.style.display = 'none';
+    }
+  };
 
 
 
@@ -17457,39 +17465,6 @@ module.exports = function(module) {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
-
-var ApiProcessing = function() {
-};
-
-ApiProcessing.prototype.getCountryNames = function(countries) {
-  var countryNames = [];
-  countries.forEach(function(country) {
-    countryNames.push(country.name);
-  });
-  return countryNames;
-};
-
-ApiProcessing.prototype.processCountriesApi = function(countries) {
-  var countryStats = [];
-  countryStats = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry.name = country.name;
-    reformattedCountry.area = country.area;
-    reformattedCountry.population = country.population;
-    reformattedCountry.region = country.region;
-    reformattedCountry.borders = country.borders;
-    reformattedCountry.latlng = country.latlng;
-    return reformattedCountry;
-  });
-  // console.log(countryStats)
-  return countryStats;
-};
-
-module.exports = ApiProcessing;
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
@@ -18510,6 +18485,39 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! @preserve
 return numeral;
 }));
 
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var ApiProcessing = function() {
+};
+
+ApiProcessing.prototype.getCountryNames = function(countries) {
+  var countryNames = [];
+  countries.forEach(function(country) {
+    countryNames.push(country.name);
+  });
+  return countryNames;
+};
+
+ApiProcessing.prototype.processCountriesApi = function(countries) {
+  var countryStats = [];
+  countryStats = countries.map(function(country) {
+    var reformattedCountry = {};
+    reformattedCountry.name = country.name;
+    reformattedCountry.area = country.area;
+    reformattedCountry.population = country.population;
+    reformattedCountry.region = country.region;
+    reformattedCountry.borders = country.borders;
+    reformattedCountry.latlng = country.latlng;
+    return reformattedCountry;
+  });
+  // console.log(countryStats)
+  return countryStats;
+};
+
+module.exports = ApiProcessing;
 
 /***/ })
 /******/ ]);

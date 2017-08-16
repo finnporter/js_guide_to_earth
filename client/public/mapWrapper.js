@@ -168,9 +168,14 @@ MapWrapper.prototype.addMarker = function(evt) {
     }
   };
 
-  // MapWrapper.prototype.toggleOverlay = function() {
-  //   var button = document.querySelector('')
-  // }
+  MapWrapper.prototype.toggleButton = function() {
+    var overlay = document.querySelector('.earth_overlay');
+    if (overlay.style.display === 'none') {
+      overlay.style.display = 'block';
+    } else {
+      overlay.style.display = 'none';
+    }
+  };
 
 
 
