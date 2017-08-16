@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var numeral = require('numeral');
 
 //constructor for mainMap
 var MapWrapper = function(countriesInfo) {
@@ -91,9 +92,12 @@ MapWrapper.prototype.addMarker = function(evt) {
       marker.bindPopup(html);
       return;
     }
+
+    var population = numeral(country.population).format("0,0");
+
     if (country !== undefined){
       var html = '<h2>' + country.name + '</h2>' + '<br>' +
-      '<p>' + 'Population: ' + country.population + '<br>' +
+      '<p>' + 'Population: ' + population + '<br>' +
       '<p>' + 'Region: ' + country.region + '<br>' +
       '<p>' + 'Area: ' + country.area + '<br>' +
       '<p>' + 'Nearest City: ' + nearCity
