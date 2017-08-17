@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapWrapper = __webpack_require__(1);
-var ApiProcessing = __webpack_require__(2);
+var ApiProcessing = __webpack_require__(6);
 
 var makeCountriesRequest = function(url, callback) {
   var request = new XMLHttpRequest();
@@ -116,148 +116,17 @@ window.addEventListener('load', app);
 /* 1 */
 /***/ (function(module, exports) {
 
-var MapWrapper = function(countriesInfo) {
-  this.countryInfo = countriesInfo;
-  this.options = { sky: true,zoom: 2.0, position: [55.9533, 3.1883] };
-  this.earth = new WE.map('earth_div', this.options); 
-  this.country = null;
-}
-
-MapWrapper.prototype.renderMap = function() {
-  WE.tileLayer("http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg", {
-    minZoom: 0,
-    maxZoom: 5,
-    sky:true,
-    attribution: "NASA"
-  }).addTo(this.earth);
-  this.earth.on("click", this.addMarker.bind(this));
-}
-
-
-MapWrapper.prototype.addMarker = function(evt) {
-  if (evt.latitude !== null && evt.longitude !== null) {
-    var marker = WE.marker([evt.latitude, evt.longitude], 'http://clipart-finder.com/data/mini/10-flying_saucer_2.png', 50, 12).addTo(this.earth);
-
-    console.log(this) //console logs long and lat
-
-    this.countriesSearch(evt, marker)
-    setTimeout(function() {
-      marker.closePopup()
-    }, 30000)
-  }
-}
-
-MapWrapper.prototype.fillInfoWindow = function(countryInfo) {
-  return '<h3>' + countryInfo.formatted_address + '</h3>'
-}
-
-MapWrapper.prototype.countriesSearch = function(evt, marker) {
-  this.searchCity(evt);
-  var geocoder = new google.maps.Geocoder;
-  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-    this.country = results.pop()
-
-    marker.bindPopup(this.fillInfoWindow(this.country));
-    console.log(this.country.formatted_address)
-  // last array in every click contains the countries name
-}.bind(this));
-}
-
-MapWrapper.prototype.searchCity = function(evt) {
-  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-  this.makeRequest(url, this.requestComplete);
-}
-
-MapWrapper.prototype.makeRequest = function(url, callback) {
-  var request = new XMLHttpRequest();
-  request.addEventListener('load', callback);
-  request.open("GET", url);
-  request.send();
-}
-
-MapWrapper.prototype.requestComplete = function() {
-  if (this.status !== 200) return;
-
-  var jsonString = this.responseText;
-  var nearCity = JSON.parse(jsonString);
-  console.log(nearCity._embedded["location:nearest-cities"][0]._links["location:nearest-city"].name);
-}
-
-
-// var fillInfoWindow = function(countryInfo, countryNames) {
-//   for (country1 of countryNames) {
-//     for (country2 of countryInfo.formatted_address) {
-//       if (country1 === country2) {
-//         return '<h3>' + country1 + 'random info' + '</h3>'
-//       } else {
-//         return "Not a country"
-//       }
-//       }
-//     }
-//   }
-
-module.exports = MapWrapper;
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Finn/e13_workingdir/project_week_javascript/js_guide_to_earth/client/public/mapWrapper.js'");
 
 /***/ }),
-/* 2 */
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports) {
 
-var ApiProcessing = function() {
-};
-//processes [countries] in a way that will make it easier for the info window to display
-ApiProcessing.prototype.getCountryNames = function(countries) {
-  countryNames = [];
-  countries.forEach(function(country) {
-    countryNames.push(country.name);
-  });
-  return countryNames;
-};
-
-ApiProcessing.prototype.getCountryArea = function(countries) {
-  var countryAreas = [];
-  var country = {};
-  countryAreas = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.area;
-    return reformattedCountry;
-  });
-  return countryAreas;
-};
-
-ApiProcessing.prototype.getCountryPopulation = function(countries) {
-  var countryPopulations = [];
-  var country = {};
-  countryPopulations = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.population;
-    return reformattedCountry;
-  });
-  return countryPopulations;
-};
-
-ApiProcessing.prototype.getCountryRegions = function(countries) {
-  var countryRegions = [];
-  var country = {};
-  countryRegions = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.region;
-    return reformattedCountry;
-  });
-  return countryRegions;
-};
-
-ApiProcessing.prototype.getCountryBorders = function(countries) {
-  var countryBorders = [];
-  var country = {};
-  countryBorders = countries.map(function(country) {
-    var reformattedCountry = {};
-    reformattedCountry[country.alpha3code] = country.borders;
-    return reformattedCountry;
-  });
-  return countryBorders;
-};
-
-module.exports = ApiProcessing;
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Finn/e13_workingdir/project_week_javascript/js_guide_to_earth/client/public/apiProcessing.js'");
 
 /***/ })
 /******/ ]);
