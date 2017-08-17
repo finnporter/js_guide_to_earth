@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var numeral = require('numeral');
 
+
 //constructor for mainMap
 var MapWrapper = function(countriesInfo) {
   this.countriesInfo = countriesInfo;

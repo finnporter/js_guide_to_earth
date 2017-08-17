@@ -25,4 +25,5 @@ ApiProcessing.prototype.processCountriesApi = function(countries) {
   return countryStats;
 };
 
+
 module.exports = ApiProcessing;
