@@ -196,7 +196,7 @@ h1 {
     position:relative;
     padding-top:-4px;
     padding-bottom:50px;
-    -webkit-appearance: none; 
+    /*-webkit-appearance: none; */
     background-color: #343e47;
     background-color: #3e8e41;
     text-align: center;
