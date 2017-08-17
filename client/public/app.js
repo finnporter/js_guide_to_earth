@@ -32,6 +32,9 @@ var requestCountriesComplete = function() {
 
   var button = document.querySelector('.button');
   button.addEventListener('click', mainMap.toggleButton.bind(mainMap));
+
+  var soundButton = document.querySelector('.pic');
+  soundButton.addEventListener('click', mainMap.playSound.bind(mainMap))
 };
 
 var populateList = function(countriesInfo) {
@@ -43,15 +46,12 @@ var populateList = function(countriesInfo) {
     option.innerText = country;
   
     select.appendChild(option);
-
   });
 }
 
 var app = function() {
  var url = 'https://restcountries.eu/rest/v2/all';
- makeCountriesRequest(url, requestCountriesComplete);
-
- 
+ makeCountriesRequest(url, requestCountriesComplete); 
 };
 
 window.addEventListener('load', app);

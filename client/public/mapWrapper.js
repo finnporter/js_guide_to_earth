@@ -38,106 +38,106 @@ MapWrapper.prototype.addMarker = function(evt) {
   if (evt.latitude !== null && evt.longitude !== null) {
     var marker = WE.marker([evt.latitude, evt.longitude],'flyingsaucer.png',80,60)
     marker.addTo(this.earth);
-      this.searchCity(evt, marker)
-      setTimeout(function() {
-        marker.closePopup()
-      }, 5000)
-    }
-  };
-
-  MapWrapper.prototype.searchCity = function(evt, marker) {
-    var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
-
-    this.makeRequest(url, function (cityData) {
-      var nearestCity = cityData._embedded["location:nearest-cities"]
-
-      if (nearestCity === null) {
-        var nearCity = "Good landing spot. No cities nearby."
-      }
-      else {
-        var nearCity = (nearestCity[0]._links["location:nearest-city"].name);
-      }
-
-      this.geocode(marker, nearCity, evt)
-    }.bind(this));
-  };
-  
-  MapWrapper.prototype.makeRequest = function(url, callback) {
-    var request = new XMLHttpRequest();
-    request.addEventListener('load', function () {
-      if (this.status !== 200) return;
-
-      var jsonString = this.responseText;
-      var data = JSON.parse(jsonString);
-      callback(data)
-    });
-    request.open("GET", url);
-    request.send();
-  };
-
-  MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
-    var geocoder = new google.maps.Geocoder;
-    geocoder.geocode({ 'location': evt.latlng}, function(results, status){
-
-      if (results.length === 0) {
-        nearCity = "Uncharted Waters";
-        this.fillInfoWindow(marker, nearCity);
-      }
-      else {
-        this.country = results.pop();
-        console.log(this.country);
-        this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
-      }
-    }.bind(this));
-  };
-
-  MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
-    console.log(clickedInfo);
-    console.log(nearCity);
-    var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
-    if (nearCity === "Uncharted Waters") {
-      var html = '<h2>' + "Unless your vehicle can land on water, stay away!" + '</h2>'
-      marker.bindPopup(html);
-      return;
-    }
-
-    if (country !== undefined){
-      var population = numeral(country.population).format("0,0");
-      var area = numeral(country.area).format("0,0");
-      var html = '<h2>' + country.name + '</h2>' + '<br>' +
-      '<p>' + 'Population: ' + population + '<br>' +
-      '<p>' + 'Region: ' + country.region + '<br>' +
-      '<p>' + 'Area: ' + area + " km2" + '<br>' +
-      '<p>' + 'Nearest City: ' + nearCity
-      marker.bindPopup(html);
-    } else {
-      this.unmatchedCountries(marker, nearCity, clickedInfo);
-    }
-  };
-
-  MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
-    var cleanedCountryNames = {
-      "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
-      "United States": "United States of America",
-      "Russia": "Russian Federation",
-      "Czechia": "Czech Republic"
-    };
-
-    this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
-  };
-
-  MapWrapper.prototype.populateList = function() {
-    // console.log(countries);
-    console.log(this.countriesInfo);
-    var select = document.querySelector('select');
-    this.countriesInfo.name.forEach(function(country) {
-      var option = document.createElement('option');
-      option.innerText = country;
-
-      select.appendChild(option);
-    });
-
+    this.searchCity(evt, marker)
+    setTimeout(function() {
+      marker.closePopup()
+    }, 5000)
   }
+};
+
+MapWrapper.prototype.searchCity = function(evt, marker) {
+  var url = "https://api.teleport.org/api/locations/" + evt.latitude + "," + evt.longitude;
+
+  this.makeRequest(url, function (cityData) {
+    var nearestCity = cityData._embedded["location:nearest-cities"]
+
+    if (nearestCity === null) {
+      var nearCity = "Good landing spot. No cities nearby."
+    }
+    else {
+      var nearCity = (nearestCity[0]._links["location:nearest-city"].name);
+    }
+
+    this.geocode(marker, nearCity, evt)
+  }.bind(this));
+};
+
+MapWrapper.prototype.makeRequest = function(url, callback) {
+  var request = new XMLHttpRequest();
+  request.addEventListener('load', function () {
+    if (this.status !== 200) return;
+
+    var jsonString = this.responseText;
+    var data = JSON.parse(jsonString);
+    callback(data)
+  });
+  request.open("GET", url);
+  request.send();
+};
+
+MapWrapper.prototype.geocode = function(marker, nearCity, evt) {
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode({ 'location': evt.latlng}, function(results, status){
+
+    if (results.length === 0) {
+      nearCity = "Uncharted Waters";
+      this.fillInfoWindow(marker, nearCity);
+    }
+    else {
+      this.country = results.pop();
+      console.log(this.country);
+      this.fillInfoWindow(marker, nearCity, this.country.formatted_address);
+    }
+  }.bind(this));
+};
+
+MapWrapper.prototype.fillInfoWindow = function(marker, nearCity, clickedInfo) {
+  console.log(clickedInfo);
+  console.log(nearCity);
+  var country = _.find(this.countriesInfo.stats, {name: clickedInfo})
+  if (nearCity === "Uncharted Waters") {
+    var html = '<h2>' + "Unless your vehicle can land on water, stay away!" + '</h2>'
+    marker.bindPopup(html);
+    return;
+  }
+
+  if (country !== undefined){
+    var population = numeral(country.population).format("0,0");
+    var area = numeral(country.area).format("0,0");
+    var html = '<h2>' + country.name + '</h2>' + '<br>' +
+    '<p>' + 'Population: ' + population + '<br>' +
+    '<p>' + 'Region: ' + country.region + '<br>' +
+    '<p>' + 'Area: ' + area + " km2" + '<br>' +
+    '<p>' + 'Nearest City: ' + nearCity
+    marker.bindPopup(html);
+  } else {
+    this.unmatchedCountries(marker, nearCity, clickedInfo);
+  }
+};
+
+MapWrapper.prototype.unmatchedCountries = function(marker, nearCity, clickedInfo) {
+  var cleanedCountryNames = {
+    "United Kingdom": "United Kingdom of Great Britain and Northern Ireland",
+    "United States": "United States of America",
+    "Russia": "Russian Federation",
+    "Czechia": "Czech Republic"
+  };
+
+  this.fillInfoWindow(marker, nearCity, cleanedCountryNames[clickedInfo]);
+};
+
+  // MapWrapper.prototype.populateList = function() {
+  //   // console.log(countries);
+  //   console.log(this.countriesInfo);
+  //   var select = document.querySelector('select');
+  //   this.countriesInfo.name.forEach(function(country) {
+  //     var option = document.createElement('option');
+  //     option.innerText = country;
+
+  //     select.appendChild(option);
+  //   });
+
+  // }
 
   MapWrapper.prototype.flyToCountry = function() {
     //console.log(this.countriesInfo.stats)
@@ -177,5 +177,10 @@ MapWrapper.prototype.addMarker = function(evt) {
       this.animated = false;
     }
   };
+
+  MapWrapper.prototype.playSound = function() {
+    var sound = document.getElementById("audio");
+    sound.play();
+  }
 
   module.exports = MapWrapper;
