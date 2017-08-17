@@ -121,12 +121,13 @@ h1 {
   font-size: 18px;
   cursor: pointer;
   text-align: center;
+  line-height: 10px;
   outline: bold;
-  color: #369ECC;
   background-color: #4CAF50;
   border: none;
   border-radius: 5px;
-  background-image: url("http://i.imgur.com/VXcVUTX.png")
+  background-image: url("http://i.imgur.com/VXcVUTX.png");
+  font-family: Anurati;
   /*box-shadow: 0 9px #999;*/
 }
 

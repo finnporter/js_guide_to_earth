@@ -104,6 +104,7 @@ var requestCountriesComplete = function() {
 
   var soundButton = document.querySelector('.pic');
   soundButton.addEventListener('click', mainMap.playSound.bind(mainMap))
+
 };
 
 var populateList = function(countriesInfo) {
