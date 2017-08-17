@@ -4,19 +4,14 @@
   src:url("Anurati.otf");
 }
 
-h1 {
+/*h1 {
   text-align: center;
   font-family: Anurati;
   color: #1757d6;
   font-size: 50px;
   font-kerning: 20px;
+}*/
 
-  above faisal
-  
-@font-family{
-  font-family: Anuratiimport;
-  src:url("Anurati.otf");
-}
 h1 {
   text-align: center;
   font-family: 'Anurati-Regular';
@@ -75,6 +70,7 @@ h1 {
   z-index: 2;
   background-image: url("http://i.imgur.com/VXcVUTX.png");
   }
+
   .alienlanguage{
     position: absolute;
     top:50px;
@@ -92,7 +88,6 @@ h1 {
     z-index: 2;
     background-image: url("language.png");
     opacity: 0.2;
-
   }
 
   .alienlanguage2{
@@ -112,7 +107,6 @@ h1 {
     z-index: 2;
     background-image: url("language.png");
     opacity: 0.2;
-
   }
 
   .button {
@@ -203,17 +197,15 @@ h1 {
     position:relative;
     padding-top:100px;
     padding-bottom:50px;
-
     -webkit-appearance: none; 
     background-color: #343e47;
-
     background-color: #3e8e41;
     text-align: center;
     width:250px;
     height:40px;
     opacity:0.7;
     background-image:url("http://i.imgur.com/VXcVUTX.png");
-    font-family:Anurati;
+    font-family: Anurati;
   }
 
   select option { padding: 0 4px; }
