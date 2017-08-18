@@ -1,8 +1,8 @@
-#Hitchhiker's Gide To Earth
+# Hitchhiker's Gide To Earth
 
-##JavaScript Group Project Guidelines
+## JavaScript Group Project Guidelines
 
-###AIMS/PURPOSE:
+### AIMS/PURPOSE:
 
 - To gain experience working in a team with other developers - to understand some of the challenges this creates and ways to overcome these
 - To have the opportunity to try using agile working methods
@@ -10,7 +10,7 @@
 - To consolidate learning from the JavaScript module and have the opportunity to try some new things - the project is not focused on making an exciting end product, more on the process and teamwork.
 - To create a project using core Javascript - this means NO frameworks or jQuery are allowed. Only use the tools/packages we have used in class, and if you have any questions about additional tools ask an instructor.
 
-##Brief: Educational App
+## Brief: Educational App
 
 The BBC are looking to improve their online offering of educational content by developing some interactive apps that display information in a fun and interesting way.
 
@@ -25,7 +25,7 @@ MVP
 
 ---
 
-###APIs included in this project
+### APIs included in this project
 
 - WebGL Earth (http://www.webglearth.org)
 - Google Maps for reverse geocoding (https://developers.google.com/maps/)
@@ -34,7 +34,7 @@ MVP
 
 ----
 
-###How to run
+### How to run
 1) In terminal, create a folder and type ```git init``` to initialize the repo.
 
 2) Type ```git clone``` + SSH key of the project. This downloads the repo to your machine.
